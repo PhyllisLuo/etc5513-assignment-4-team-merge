@@ -1,0 +1,99 @@
+---
+title: "Analysis on CO2 Emission, Population and Energy Use Problems"
+author:
+- familyname: Luo
+  othernames: Yu
+  address: Monash University
+  email: yluo0065@student.monash.com
+  correspondingauthor: true
+  qualifications:  Master
+- familyname: Thakker
+  othernames: Khushee
+  address: Monash University
+  email: ktha0021@student.monash.edu
+  qualifications: Master
+- familyname: Chen
+  othernames: Yunqi
+  address: Monash University
+  email: yche0454@student.monash.edu
+  correspondingauthor: true
+  qualifications:  Master
+organization: the World Bank data base
+bibliography: references.bib
+biblio-style: authoryear-comp
+linestretch: 1.5
+output:
+  bookdown::pdf_document2:
+    template: monashreport2.tex
+    fig_caption: yes
+    fig_height: 5
+    fig_width: 8
+    includes:
+      in_header: preamble.tex
+    keep_tex: yes
+    number_sections: yes
+    citation_package: biblatex
+    toc: false
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, echo = FALSE, message = FALSE, warning = FALSE, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, 
+                      message=FALSE, 
+                      warning=FALSE,
+                      fig.width = 6, 
+                      fig.height = 4,
+                      fig.align="center")
+knitr::opts_chunk$set(fig.pos = "!h", out.extra = "")
+
+# Libraries
+
+library(tidyverse)
+library(readr)
+library(kableExtra)
+library(bookdown)
+library(ggplot2)
+library(stringr)
+library(lubridate)
+```
+
+
+```{r read-data}
+# Read the data
+data <- read.csv(file = 
+                   "Data/koalabase-1996-2017.csv")%>%
+  mutate(Call.Date = dmy(Call.Date),
+         Year = year(Call.Date),
+         Month = month(Call.Date),
+         Day = day(Call.Date)) %>% 
+  separate(Adult.Size, 
+           c("Phase", "Size"),"\\(")
+
+data$Size <-
+  gsub(")","",as.character(data$Size))
+
+```
+
+\section*{Introduction}
+
+\section*{1 }
+
+\subsection*{1.2 }
+
+
+\clearpage
+\section*{2 }
+
+\subsection*{2.1 }
+
+\clearpage
+\section*{3 }
+
+\subsection*{3.1 }
+
+\clearpage
+\section*{References}
+Koala Hospital Data.
+https://www.data.qld.gov.au/dataset/9e3147cc-df40-4359-b603-845673401568
+
