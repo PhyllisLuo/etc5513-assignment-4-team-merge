@@ -1,5 +1,5 @@
 ---
-title: "Analysis on CO2 Emission, Population and Energy Use Problems"
+title: "World Happiness Report 2020"
 author:
 - familyname: Luo
   othernames: Yu
@@ -50,7 +50,7 @@ knitr::opts_chunk$set(fig.pos = "!h", out.extra = "")
 # Libraries
 
 library(tidyverse)
-library(readr)
+library(readxl)
 library(kableExtra)
 library(bookdown)
 library(ggplot2)
@@ -61,18 +61,7 @@ library(lubridate)
 
 ```{r read-data}
 # Read the data
-data <- read.csv(file = 
-                   "Data/koalabase-1996-2017.csv")%>%
-  mutate(Call.Date = dmy(Call.Date),
-         Year = year(Call.Date),
-         Month = month(Call.Date),
-         Day = day(Call.Date)) %>% 
-  separate(Adult.Size, 
-           c("Phase", "Size"),"\\(")
-
-data$Size <-
-  gsub(")","",as.character(data$Size))
-
+WHR20 <- read_excel("Data/WHR20_DataForFigure2.1.xls")
 ```
 
 \section*{Introduction}
@@ -94,6 +83,5 @@ data$Size <-
 
 \clearpage
 \section*{References}
-Koala Hospital Data.
-https://www.data.qld.gov.au/dataset/9e3147cc-df40-4359-b603-845673401568
+
 
