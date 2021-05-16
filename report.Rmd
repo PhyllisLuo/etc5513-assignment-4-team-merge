@@ -74,7 +74,30 @@ WHR20 <- read_excel("Data/WHR20_DataForFigure2.1.xls")
 \clearpage
 \section*{2 }
 
-\subsection*{2.1 }
+\subsection*{2.1 GDP}
+
+```{r}
+GDP <- WHR20 %>% 
+    ggplot(aes(x = `Ladder score`, 
+               y = `Logged GDP per capita`, 
+               size = `Ladder score`, 
+               color =`Regional indicator`)) +
+    geom_point(alpha = 0.5) +
+    scale_size(range = c(.3,6), name="Ladder score")
+
+ggplotly(GDP)
+```
+
+```{r}
+WHR20 %>% 
+    ggplot(aes(x = `Ladder score`, 
+               y = `Logged GDP per capita`, 
+               color =`Regional indicator`)) + 
+  geom_boxplot()
+```
+
+\subsection*{2.2 Social support}
+\subsection*{2.3 Social Healthy life expectancy}
 
 \clearpage
 \section*{3 }
