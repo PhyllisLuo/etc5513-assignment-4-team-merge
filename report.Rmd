@@ -84,7 +84,7 @@ library(plotly)
 ```
 
 bubble map
-```{r}
+```{r , warning=FALSE}
 freep <- WHR20 %>% 
     ggplot(aes(x = `Ladder score`, 
                y = `Freedom to make life choices`, 
@@ -98,13 +98,66 @@ ggplotly(freep)
 ```
 
 boxplot
-```{r GDP-boxp}
+```{r}
 WHR20 %>% 
     ggplot(aes(x = `Ladder score`, 
                y = `Freedom to make life choices`, 
                color =`Regional indicator`)) + 
   geom_boxplot()
 ```
+
+
+\subsection*{2.5 Generosity }
+
+bubble map
+```{r , warning=FALSE}
+generop <- WHR20 %>% 
+    ggplot(aes(x = `Ladder score`, 
+               y = Generosity, 
+               size = `Ladder score`, 
+               color =`Regional indicator`,
+               stroke = `Country name`)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "lm", se = FALSE) +
+  scale_size(range = c(.3,6), name="Ladder score")
+ggplotly(generop)
+```
+
+boxplot
+```{r}
+WHR20 %>% 
+    ggplot(aes(x = `Ladder score`, 
+               y = Generosity, 
+               color =`Regional indicator`)) + 
+  geom_boxplot()
+```
+
+
+\subsection*{2.6 Perceptions of corruption }
+
+bubble map
+```{r , warning=FALSE}
+generop <- WHR20 %>% 
+    ggplot(aes(x = `Ladder score`, 
+               y = `Perceptions of corruption`, 
+               size = `Ladder score`, 
+               color =`Regional indicator`,
+               stroke = `Country name`)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "lm", se = FALSE) +
+  scale_size(range = c(.3,6), name="Ladder score")
+ggplotly(generop)
+```
+
+boxplot
+```{r}
+WHR20 %>% 
+    ggplot(aes(x = `Ladder score`, 
+               y = `Perceptions of corruption`, 
+               color =`Regional indicator`)) + 
+  geom_boxplot()
+```
+
 
 \clearpage
 \section*{3 }
