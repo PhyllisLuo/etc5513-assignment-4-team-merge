@@ -97,6 +97,17 @@ WHR20 %>%
   geom_boxplot()
 ```
 
+```{r GDP-bar}
+gdp_mean <- WHR20 %>% group_by(`Regional indicator`) %>% 
+  summarise(mean = weighted.mean(`Ladder score`))
+
+gdp_mean %>% 
+  ggplot(aes(`Regional indicator`, 
+                   mean, 
+                   fill = `Regional indicator`))+
+  geom_col()
+```
+
 \subsection*{2.2 Social support}
 \subsection*{2.3 Social Healthy life expectancy}
 
