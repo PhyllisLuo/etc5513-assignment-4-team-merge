@@ -76,6 +76,36 @@ WHR20 <- read_excel("Data/WHR20_DataForFigure2.1.xls")
 
 \subsection*{2.1 }
 
+
+\subsection*{2.4 Freedom to make life choices }
+
+```{r}
+library(plotly)
+```
+
+bubble map
+```{r}
+freep <- WHR20 %>% 
+    ggplot(aes(x = `Ladder score`, 
+               y = `Freedom to make life choices`, 
+               size = `Ladder score`, 
+               color =`Regional indicator`,
+               stroke = `Country name`)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "lm", se = FALSE) +
+  scale_size(range = c(.3,6), name="Ladder score")
+ggplotly(freep)
+```
+
+boxplot
+```{r GDP-boxp}
+WHR20 %>% 
+    ggplot(aes(x = `Ladder score`, 
+               y = `Freedom to make life choices`, 
+               color =`Regional indicator`)) + 
+  geom_boxplot()
+```
+
 \clearpage
 \section*{3 }
 
