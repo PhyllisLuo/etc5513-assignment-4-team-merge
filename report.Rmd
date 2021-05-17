@@ -67,6 +67,32 @@ WHR20 <- read_excel("Data/WHR20_DataForFigure2.1.xls")
 \section*{Introduction}
 
 \section*{1 }
+```{r}
+library("janitor")
+library("kableExtra")
+```
+
+
+Happiness score by region:
+
+```{r}
+happiness <- WHR20 %>% 
+  select(`Country name`,`Regional indicator`,`Ladder score`,`Logged GDP per capita`,`Social support`,`Healthy life expectancy`,`Freedom to make life choices`,Generosity,`Perceptions of corruption`) %>% 
+  mutate(`Happiness Rank` = rank(-`Ladder score`)) %>% 
+  rename(`Happiness Score` = `Ladder score`) %>% clean_names()
+                
+```
+ - happiness rank : the more the ladder score the higher the rank
+ 
+```{r regiontable}
+reg_avg <- happiness %>%
+  select(regional_indicator,happiness_score) %>%
+  group_by(regional_indicator) %>%
+  summarize(Average = mean(happiness_score)) %>% 
+  arrange(-Average)
+```
+ 
+
 
 \subsection*{1.2 }
 
