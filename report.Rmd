@@ -129,6 +129,20 @@ From the box plot we see that the happiness scores are quite different among the
 
 \subsection*{3.1 }
 
+```{r  fig.width=8}
+
+fig <- plot_ly(happiness, type='choropleth', locations= happiness$iso3 , z= happiness$happiness_score, text= ~paste(
+                      "<br><b>Country:</b> ", country_name,
+                      "<br><b>Happiness rank:</b>", happiness_rank), colorscale="Viridis")
+
+fig <- fig %>% colorbar(title = "Happiness Score" )
+
+fig <- fig %>% layout(
+    title = 'World Happiness Map, Year 2020')
+fig
+
+```
+
 \clearpage
 \section*{References}
 
