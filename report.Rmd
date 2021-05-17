@@ -70,28 +70,50 @@ WHR20 <- read_excel("Data/WHR20_DataForFigure2.1.xls")
 ```{r}
 library("janitor")
 library("kableExtra")
+library("plotly")
 ```
-
-
-Happiness score by region:
 
 ```{r}
 happiness <- WHR20 %>% 
   select(`Country name`,`Regional indicator`,`Ladder score`,`Logged GDP per capita`,`Social support`,`Healthy life expectancy`,`Freedom to make life choices`,Generosity,`Perceptions of corruption`) %>% 
   mutate(`Happiness Rank` = rank(-`Ladder score`)) %>% 
   rename(`Happiness Score` = `Ladder score`) %>% clean_names()
-                
+
+#happiness rank : the more the ladder score the higher the rank              
+
 ```
- - happiness rank : the more the ladder score the higher the rank
- 
+
 ```{r regiontable}
 reg_avg <- happiness %>%
   select(regional_indicator,happiness_score) %>%
   group_by(regional_indicator) %>%
   summarize(Average = mean(happiness_score)) %>% 
   arrange(-Average)
+
 ```
- 
+
+```{r fig.align='center',fig.height=5,fig.width=8}
+plot_ly(happiness, x=~regional_indicator,
+              y=~happiness_score,
+              type="box",
+              boxpoints="all",
+              color=~regional_indicator,
+        text = ~paste("<b>Region:</b> ", regional_indicator,
+                      "<br><b>Country:</b> ", country_name,
+                      "<br><b>Happiness Score:</b>", happiness_score))%>%
+  layout(xaxis=list(showticklabels = FALSE),
+         yaxis=list(title="Happiness Score"),
+         legend=list(font = (size = 5)),
+         margin=list(b = 100),
+         title="Box Plot of Happiness Score by Region")
+```
+
+
+From the box plot we see that the happiness scores are quite different among these regions. Overall countries in Western Europe has highest happiness score compared to countries in other region.
+
+  
+
+
 
 
 \subsection*{1.2 }
