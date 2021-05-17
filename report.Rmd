@@ -76,19 +76,20 @@ WHR20 <- read_excel("Data/WHR20_DataForFigure2.1.xls")
 
 \subsection*{2.1 GDP}
 
-```{r}
+```{r GDP-bbl}
+library(plotly)
 GDP <- WHR20 %>% 
     ggplot(aes(x = `Ladder score`, 
                y = `Logged GDP per capita`, 
                size = `Ladder score`, 
-               color =`Regional indicator`)) +
+               color =`Regional indicator`,
+               stroke = `Country name`)) +
     geom_point(alpha = 0.5) +
-    scale_size(range = c(.3,6), name="Ladder score")
-
+  scale_size(range = c(.3,6), name="Ladder score")
 ggplotly(GDP)
 ```
 
-```{r}
+```{r GDP-boxp}
 WHR20 %>% 
     ggplot(aes(x = `Ladder score`, 
                y = `Logged GDP per capita`, 
