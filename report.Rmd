@@ -71,6 +71,7 @@ WHR20 <- read_excel("Data/WHR20_DataForFigure2.1.xls")
 library("janitor")
 library("kableExtra")
 library("plotly")
+library("countrycode")
 ```
 
 ```{r}
@@ -89,6 +90,14 @@ reg_avg <- happiness %>%
   group_by(regional_indicator) %>%
   summarize(Average = mean(happiness_score)) %>% 
   arrange(-Average)
+
+```
+
+```{r}
+happiness$iso3 <- countrycode(happiness$country_name, 'country.name', 'iso3c')
+
+happiness[happiness$country_name=="Kosovo","iso3"] <- "XKX"
+
 
 ```
 
