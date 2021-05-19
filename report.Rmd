@@ -82,19 +82,15 @@ GDP <- WHR20 %>%
     ggplot(aes(x = `Ladder score`, 
                y = `Logged GDP per capita`, 
                size = `Ladder score`, 
-               color =`Regional indicator`,
-               stroke = `Country name`)) +
+               color =`Regional indicator`)) +
     geom_point(alpha = 0.5) +
   scale_size(range = c(.3,6), name="Ladder score")
 ggplotly(GDP)
 ```
 
-```{r GDP-boxp}
-WHR20 %>% 
-    ggplot(aes(x = `Ladder score`, 
-               y = `Logged GDP per capita`, 
-               color =`Regional indicator`)) + 
-  geom_boxplot()
+```{r GDP-bbl-facet}
+GDP + facet_wrap(~ `Regional indicator`, ncol = 2,
+                 strip.position = "right")
 ```
 
 ```{r GDP-bar}
