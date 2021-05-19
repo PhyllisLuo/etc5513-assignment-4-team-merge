@@ -23,7 +23,7 @@ bibliography: references.bib
 biblio-style: authoryear-comp
 linestretch: 1.5
 output:
-  bookdown::pdf_document2:
+  bookdown::html_document2:
     template: monashreport2.tex
     fig_caption: yes
     fig_height: 5
@@ -83,6 +83,40 @@ WHR20 <- read_excel("Data/WHR20_DataForFigure2.1.xls")
 library(plotly)
 ```
 
+the score of "Freedom to make life choices" from high to low:
+```{r}
+free_avg  <- WHR20 %>%
+  group_by(`Regional indicator`) %>% 
+  summarise(average = mean(`Freedom to make life choices`)) %>% 
+  arrange(desc(average)) %>% 
+  gridExtra::grid.table()
+```
+
+The group of high "Freedom to make life choices" score:
+```{r}
+ WHR20 %>%
+  filter(`Regional indicator` %in% c("Southeast Asia",  "North America and ANZ", "Western Europe", "Latin America and Caribbean")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+               y = `Freedom to make life choices`)) +
+  geom_point() +
+  facet_wrap(~`Regional indicator`)
+
+```
+
+
+
+
+scatter plot
+```{r}
+WHR20 %>% 
+    ggplot(aes(x = `Ladder score`, 
+               y = `Freedom to make life choices`)) +
+  geom_point() +
+  facet_wrap(~`Regional indicator`)
+```
+
+
+
 bubble map
 ```{r , warning=FALSE}
 freep <- WHR20 %>% 
@@ -103,7 +137,7 @@ WHR20 %>%
     ggplot(aes(x = `Ladder score`, 
                y = `Freedom to make life choices`, 
                color =`Regional indicator`)) + 
-  geom_boxplot()
+  geom_violin()
 ```
 
 
