@@ -117,7 +117,7 @@ SS <- WHR20 %>%
 ggplotly(SS)
 ```
 
-```{r GDP-bbl-facet}
+```{r SS-bbl-facet}
 SS + facet_wrap(~ `Regional indicator`, ncol = 2,
                  strip.position = "right")
 ```
