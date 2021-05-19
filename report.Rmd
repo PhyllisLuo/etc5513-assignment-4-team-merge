@@ -85,11 +85,12 @@ library(plotly)
 
 the score of "Freedom to make life choices" from high to low:
 ```{r}
-free_avg  <- WHR20 %>%
+free_avg <- WHR20 %>%
   group_by(`Regional indicator`) %>% 
   summarise(average = mean(`Freedom to make life choices`)) %>% 
-  arrange(desc(average)) %>% 
-  gridExtra::grid.table()
+  arrange(desc(average))
+
+  kable(free_avg)
 ```
 
 The group of high "Freedom to make life choices" score:
@@ -99,71 +100,43 @@ The group of high "Freedom to make life choices" score:
   ggplot(aes(x = `Ladder score`, 
                y = `Freedom to make life choices`)) +
   geom_point() +
-  facet_wrap(~`Regional indicator`)
-
+  facet_wrap(~`Regional indicator`, nrow = 1)
 ```
 
+The group of middle "Freedom to make life choices" score:
 
-
-
-scatter plot
 ```{r}
-WHR20 %>% 
-    ggplot(aes(x = `Ladder score`, 
+ WHR20 %>%
+  filter(`Regional indicator` %in% c("Commonwealth of Independent States", "South Asia", "Central and Eastern Europe", "East Asia")) %>% 
+  ggplot(aes(x = `Ladder score`, 
                y = `Freedom to make life choices`)) +
   geom_point() +
-  facet_wrap(~`Regional indicator`)
+  facet_wrap(~`Regional indicator`, nrow = 1)
 ```
 
-
-
-bubble map
-```{r , warning=FALSE}
-freep <- WHR20 %>% 
-    ggplot(aes(x = `Ladder score`, 
-               y = `Freedom to make life choices`, 
-               size = `Ladder score`, 
-               color =`Regional indicator`,
-               stroke = `Country name`)) +
-  geom_point(alpha = 0.5) +
-  geom_smooth(method = "lm", se = FALSE) +
-  scale_size(range = c(.3,6), name="Ladder score")
-ggplotly(freep)
-```
-
-boxplot
+low score:
 ```{r}
-WHR20 %>% 
-    ggplot(aes(x = `Ladder score`, 
-               y = `Freedom to make life choices`, 
-               color =`Regional indicator`)) + 
-  geom_violin()
+ WHR20 %>%
+  filter(`Regional indicator` %in% c("Sub-Saharan Africa", "Middle East and North Africa")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+               y = `Freedom to make life choices`)) +
+  geom_point() +
+  facet_wrap(~`Regional indicator`, nrow = 1)
 ```
+
 
 
 \subsection*{2.5 Generosity }
 
-bubble map
-```{r , warning=FALSE}
-generop <- WHR20 %>% 
-    ggplot(aes(x = `Ladder score`, 
-               y = Generosity, 
-               size = `Ladder score`, 
-               color =`Regional indicator`,
-               stroke = `Country name`)) +
-  geom_point(alpha = 0.5) +
-  geom_smooth(method = "lm", se = FALSE) +
-  scale_size(range = c(.3,6), name="Ladder score")
-ggplotly(generop)
-```
+the score of "Generosity" from high to low:
 
-boxplot
 ```{r}
-WHR20 %>% 
-    ggplot(aes(x = `Ladder score`, 
-               y = Generosity, 
-               color =`Regional indicator`)) + 
-  geom_boxplot()
+gene_avg  <- WHR20 %>%
+  group_by(`Regional indicator`) %>% 
+  summarise(average = mean(`Generosity`)) %>% 
+  arrange(desc(average))
+
+  kable(gene_avg)
 ```
 
 
