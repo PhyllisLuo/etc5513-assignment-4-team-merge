@@ -141,6 +141,63 @@ HLE + facet_wrap(~ `Regional indicator`, ncol = 2,
                  strip.position = "right")
 ```
 
+
+\subsection*{2.4 Freedom to make life choices}
+
+```{r FLC-bbl}
+FLC <- WHR20 %>% 
+    ggplot(aes(x = `Ladder score`, 
+               y = `Freedom to make life choices`, 
+               size = `Ladder score`, 
+               color =`Regional indicator`)) +
+    geom_point(alpha = 0.5) +
+  scale_size(range = c(.3,6), name="Ladder score")
+ggplotly(FLC)
+```
+
+```{r FLC-bbl-facet}
+FLC + facet_wrap(~ `Regional indicator`, ncol = 2,
+                 strip.position = "right")
+```
+
+
+\subsection*{2.5 Generosity}
+
+```{r GNR-bbl}
+GNR <- WHR20 %>% 
+    ggplot(aes(x = `Ladder score`, 
+               y = `Healthy life expectancy`, 
+               size = `Ladder score`, 
+               color =`Regional indicator`)) +
+    geom_point(alpha = 0.5) +
+  scale_size(range = c(.3,6), name="Ladder score")
+ggplotly(GNR)
+```
+
+```{r GNR-bbl-facet}
+GNR + facet_wrap(~ `Regional indicator`, ncol = 2,
+                 strip.position = "right")
+```
+
+
+\subsection*{2.6 Perceptions of corruption}
+
+```{r POC-bbl}
+POC <- WHR20 %>% 
+    ggplot(aes(x = `Ladder score`, 
+               y = `Healthy life expectancy`, 
+               size = `Ladder score`, 
+               color =`Regional indicator`)) +
+    geom_point(alpha = 0.5) +
+  scale_size(range = c(.3,6), name="Ladder score")
+ggplotly(POC)
+```
+
+```{r POC-bbl-facet}
+POC + facet_wrap(~ `Regional indicator`, ncol = 2,
+                 strip.position = "right")
+```
+
 \clearpage
 \section*{3 }
 
