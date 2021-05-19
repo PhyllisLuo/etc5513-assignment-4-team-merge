@@ -105,7 +105,41 @@ gdp_mean %>%
 ```
 
 \subsection*{2.2 Social support}
+
+```{r SS-bbl}
+SS <- WHR20 %>% 
+    ggplot(aes(x = `Ladder score`, 
+               y = `Social support`, 
+               size = `Ladder score`, 
+               color =`Regional indicator`)) +
+    geom_point(alpha = 0.5) +
+  scale_size(range = c(.3,6), name="Ladder score")
+ggplotly(SS)
+```
+
+```{r GDP-bbl-facet}
+SS + facet_wrap(~ `Regional indicator`, ncol = 2,
+                 strip.position = "right")
+```
+
 \subsection*{2.3 Social Healthy life expectancy}
+
+```{r HLE-bbl}
+library(plotly)
+HLE <- WHR20 %>% 
+    ggplot(aes(x = `Ladder score`, 
+               y = `Healthy life expectancy`, 
+               size = `Ladder score`, 
+               color =`Regional indicator`)) +
+    geom_point(alpha = 0.5) +
+  scale_size(range = c(.3,6), name="Ladder score")
+ggplotly(HLE)
+```
+
+```{r HLE-bbl-facet}
+HLE + facet_wrap(~ `Regional indicator`, ncol = 2,
+                 strip.position = "right")
+```
 
 \clearpage
 \section*{3 }
