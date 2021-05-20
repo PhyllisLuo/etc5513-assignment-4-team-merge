@@ -93,7 +93,7 @@ free_avg <- WHR20 %>%
   kable(free_avg)
 ```
 
-The group of high "Freedom to make life choices" score:
+"Freedom to make life choices" score greater than 8.0:
 ```{r}
  WHR20 %>%
   filter(`Regional indicator` %in% c("Southeast Asia",  "North America and ANZ", "Western Europe", "Latin America and Caribbean")) %>% 
@@ -103,7 +103,7 @@ The group of high "Freedom to make life choices" score:
   facet_wrap(~`Regional indicator`, nrow = 1)
 ```
 
-The group of middle "Freedom to make life choices" score:
+"Freedom to make life choices" score between 0.75-0.8:
 
 ```{r}
  WHR20 %>%
@@ -114,7 +114,7 @@ The group of middle "Freedom to make life choices" score:
   facet_wrap(~`Regional indicator`, nrow = 1)
 ```
 
-low score:
+"Freedom to make life choices" score lower than 0.75:
 ```{r}
  WHR20 %>%
   filter(`Regional indicator` %in% c("Sub-Saharan Africa", "Middle East and North Africa")) %>% 
@@ -140,29 +140,68 @@ gene_avg  <- WHR20 %>%
 ```
 
 
-\subsection*{2.6 Perceptions of corruption }
-
-bubble map
-```{r , warning=FALSE}
-generop <- WHR20 %>% 
-    ggplot(aes(x = `Ladder score`, 
-               y = `Perceptions of corruption`, 
-               size = `Ladder score`, 
-               color =`Regional indicator`,
-               stroke = `Country name`)) +
-  geom_point(alpha = 0.5) +
-  geom_smooth(method = "lm", se = FALSE) +
-  scale_size(range = c(.3,6), name="Ladder score")
-ggplotly(generop)
+Generosity score greater than 0:
+```{r}
+ WHR20 %>%
+  filter(`Regional indicator` %in% c("North America and ANZ","South Asia","Western Europe","South Asia","Sub-Saharan Africa")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+               y = `Generosity`)) +
+  geom_point() +
+  facet_wrap(~`Regional indicator`, nrow = 1)
 ```
 
-boxplot
+Generosity score lower than 0:
 ```{r}
-WHR20 %>% 
-    ggplot(aes(x = `Ladder score`, 
-               y = `Perceptions of corruption`, 
-               color =`Regional indicator`)) + 
-  geom_boxplot()
+ WHR20 %>%
+  filter(`Regional indicator` %in% c("Commonwealth of Independent States","East Asia","Latin America and Caribbean","Middle East and North Africa","Central and Eastern Europe")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+               y = `Generosity`)) +
+  geom_point() +
+  facet_wrap(~`Regional indicator`, nrow = 1)
+```
+
+
+\subsection*{2.6 Perceptions of corruption }
+
+the score of "Perceptions of corruption" from high to low:
+
+```{r}
+perc_avg  <- WHR20 %>%
+  group_by(`Regional indicator`) %>% 
+  summarise(average = mean(`Perceptions of corruption`)) %>% 
+  arrange(desc(average))
+
+  kable(perc_avg)
+```
+
+"Perceptions of corruption" score greater than 0.75:
+```{r}
+ WHR20 %>%
+  filter(`Regional indicator` %in% c("Central and Eastern Europe","Latin America and Caribbean","South Asia","Sub-Saharan Africa","Middle East and North Africa")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+               y = `Perceptions of corruption`)) +
+  geom_point() +
+  facet_wrap(~`Regional indicator`, nrow = 1)
+```
+
+"Perceptions of corruption" score between 0.70-0.75:
+```{r}
+ WHR20 %>%
+  filter(`Regional indicator` %in% c("Commonwealth of Independent States","Southeast Asia","East Asia")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+               y = `Perceptions of corruption`)) +
+  geom_point() +
+  facet_wrap(~`Regional indicator`, nrow = 1)
+```
+
+"Perceptions of corruption" score lower than 0.70:
+```{r}
+ WHR20 %>%
+  filter(`Regional indicator` %in% c("Western Europe","North America and ANZ")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+               y = `Perceptions of corruption`)) +
+  geom_point() +
+  facet_wrap(~`Regional indicator`, nrow = 1)
 ```
 
 
