@@ -83,119 +83,140 @@ gdp_mean <- WHR20 %>%
             = round(mean(`Logged GDP per capita`),2))%>%
   arrange(-Average)
 
-  gdp_mean %>% kable()
+  gdp_mean %>% kable() %>%
+      kable_styling(bootstrap_options = c("striped", "hover"))
 ```
 
+```{r GDP-dens, eval = FALSE}
+ggplot(WHR20, aes(x = `Logged GDP per capita`))+
+  geom_density()+
+  geom_vline(aes(xintercept =
+                   mean(`Logged GDP per capita`)),
+             linetype = "dashed")
 
-```{r GDP-bbl}
-library(plotly)
-GDP <- WHR20 %>% 
-    ggplot(aes(x = `Ladder score`, 
-               y = `Logged GDP per capita`, 
-               size = `Ladder score`, 
-               color =`Regional indicator`)) +
-    geom_point(alpha = 0.5) +
-  scale_size(range = c(.3,6), name="Ladder score")
-ggplotly(GDP)
+mean(WHR20$`Logged GDP per capita`)
+
+quantile(WHR20$`Logged GDP per capita`)
 ```
 
-```{r GDP-bbl-facet}
-GDP + facet_wrap(~ `Regional indicator`, ncol = 2,
-                 strip.position = "right")
+```{r GDP-high}
+ WHR20 %>%
+  filter(`Regional indicator` != 
+           c("Commonwealth of Independent States",
+             "South Asia", 
+             "Sub-Saharan Africa")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+             y = `Logged GDP per capita`)) +
+  geom_point() +
+  facet_wrap(~`Regional indicator`, ncol = 3)
+```
+
+```{r GDP-high}
+ WHR20 %>%
+  filter(`Regional indicator` %in% 
+           c("Commonwealth of Independent States",
+             "South Asia", 
+             "Sub-Saharan Africa")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+             y = `Freedom to make life choices`)) +
+  geom_point() +
+  facet_wrap(~`Regional indicator`, ncol = 3)
 ```
 
 \subsection*{2.2 Social support}
 
-```{r SS-bbl}
-SS <- WHR20 %>% 
-    ggplot(aes(x = `Ladder score`, 
-               y = `Social support`, 
-               size = `Ladder score`, 
-               color =`Regional indicator`)) +
-    geom_point(alpha = 0.5) +
-  scale_size(range = c(.3,6), name="Ladder score")
-ggplotly(SS)
+```{r SS-ord}
+SS_mean <- WHR20 %>% 
+  group_by(`Regional indicator`) %>% 
+  summarise(Average 
+            = round(mean(`Social support`),2))%>%
+  arrange(-Average)
+
+  SS_mean %>% kable() %>% 
+      kable_styling(bootstrap_options = c("striped", "hover"))
 ```
 
-```{r SS-bbl-facet}
-SS + facet_wrap(~ `Regional indicator`, ncol = 2,
-                 strip.position = "right")
+```{r SS-dens, eval = FALSE}
+ggplot(WHR20, aes(x = `Social support`))+
+  geom_density()+
+  geom_vline(aes(xintercept =
+                   mean(`Social support`)),
+             linetype = "dashed")
+
+mean(WHR20$`Social support`)
+
+quantile(WHR20$`Social support`)
+```
+
+```{r SS-high}
+ WHR20 %>%
+  filter(`Regional indicator` != 
+           c("Middle East and North Africa",
+             "South Asia", 
+             "Sub-Saharan Africa")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+             y = `Social support`)) +
+  geom_point() +
+  facet_wrap(~`Regional indicator`, ncol = 3)
+```
+
+```{r SS-high}
+ WHR20 %>%
+  filter(`Regional indicator` %in% 
+           c("Middle East and North Africa",
+             "South Asia", 
+             "Sub-Saharan Africa")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+             y = `Social support`)) +
+  geom_point() +
+  facet_wrap(~`Regional indicator`, ncol = 3)
 ```
 
 \subsection*{2.3 Social Healthy life expectancy}
 
-```{r HLE-bbl}
-library(plotly)
-HLE <- WHR20 %>% 
-    ggplot(aes(x = `Ladder score`, 
-               y = `Healthy life expectancy`, 
-               size = `Ladder score`, 
-               color =`Regional indicator`)) +
-    geom_point(alpha = 0.5) +
-  scale_size(range = c(.3,6), name="Ladder score")
-ggplotly(HLE)
+```{r HLE-ord}
+HLE_mean <- WHR20 %>% 
+  group_by(`Regional indicator`) %>% 
+  summarise(Average 
+            = round(mean(`Healthy life expectancy`),2))%>%
+  arrange(-Average)
+
+  HLE_mean %>% kable() %>% 
+      kable_styling(bootstrap_options = c("striped", "hover"))
 ```
 
-```{r HLE-bbl-facet}
-HLE + facet_wrap(~ `Regional indicator`, ncol = 2,
-                 strip.position = "right")
+```{r HLE-dens, eval = FALSE}
+ggplot(WHR20, aes(x = `Healthy life expectancy`))+
+  geom_density()+
+  geom_vline(aes(xintercept =
+                   mean(`Healthy life expectancy`)),
+             linetype = "dashed")
+
+mean(WHR20$`Healthy life expectancy`)
+
+quantile(WHR20$`Healthy life expectancy`)
 ```
 
-
-\subsection*{2.4 Freedom to make life choices}
-
-```{r FLC-bbl}
-FLC <- WHR20 %>% 
-    ggplot(aes(x = `Ladder score`, 
-               y = `Freedom to make life choices`, 
-               size = `Ladder score`, 
-               color =`Regional indicator`)) +
-    geom_point(alpha = 0.5) +
-  scale_size(range = c(.3,6), name="Ladder score")
-ggplotly(FLC)
+```{r SS-high}
+ WHR20 %>%
+  filter(`Regional indicator` != 
+           c("South Asia", 
+             "Sub-Saharan Africa")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+             y = `Social support`)) +
+  geom_point() +
+  facet_wrap(~`Regional indicator`, ncol = 3)
 ```
 
-```{r FLC-bbl-facet}
-FLC + facet_wrap(~ `Regional indicator`, ncol = 2,
-                 strip.position = "right")
-```
-
-
-\subsection*{2.5 Generosity}
-
-```{r GNR-bbl}
-GNR <- WHR20 %>% 
-    ggplot(aes(x = `Ladder score`, 
-               y = `Healthy life expectancy`, 
-               size = `Ladder score`, 
-               color =`Regional indicator`)) +
-    geom_point(alpha = 0.5) +
-  scale_size(range = c(.3,6), name="Ladder score")
-ggplotly(GNR)
-```
-
-```{r GNR-bbl-facet}
-GNR + facet_wrap(~ `Regional indicator`, ncol = 2,
-                 strip.position = "right")
-```
-
-
-\subsection*{2.6 Perceptions of corruption}
-
-```{r POC-bbl}
-POC <- WHR20 %>% 
-    ggplot(aes(x = `Ladder score`, 
-               y = `Healthy life expectancy`, 
-               size = `Ladder score`, 
-               color =`Regional indicator`)) +
-    geom_point(alpha = 0.5) +
-  scale_size(range = c(.3,6), name="Ladder score")
-ggplotly(POC)
-```
-
-```{r POC-bbl-facet}
-POC + facet_wrap(~ `Regional indicator`, ncol = 2,
-                 strip.position = "right")
+```{r SS-high}
+ WHR20 %>%
+  filter(`Regional indicator` %in% 
+           c("South Asia", 
+             "Sub-Saharan Africa")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+             y = `Social support`)) +
+  geom_point() +
+  facet_wrap(~`Regional indicator`, ncol = 3)
 ```
 
 \clearpage
