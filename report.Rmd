@@ -83,7 +83,8 @@ gdp_mean <- WHR20 %>%
             = round(mean(`Logged GDP per capita`),2))%>%
   arrange(-Average)
 
-  gdp_mean %>% kable() %>%
+  gdp_mean %>% 
+    kable(caption = "Average Logged GDP per capita of Regions from High to Low") %>%
       kable_styling(bootstrap_options = c("striped", "hover"))
 ```
 
@@ -101,7 +102,7 @@ mean(WHR20$`Logged GDP per capita`)
 quantile(WHR20$`Logged GDP per capita`)
 ```
 
-```{r GDP-high}
+```{r GDP-high, fig.cap = "Ladder Score vs Logged GDP per Capita for the Regions with Regional Average GDP Higher than Global"}
  WHR20 %>%
   filter(!`Regional indicator` %in% 
            c("Commonwealth of Independent States",
@@ -117,7 +118,7 @@ quantile(WHR20$`Logged GDP per capita`)
   facet_wrap(~`Regional indicator`, ncol = 3)
 ```
 
-```{r GDP-low}
+```{r GDP-low, fig.cap = "Ladder Score vs Logged GDP per Capita for the Regions with Regional Average GDP Lower than Global"}
  WHR20 %>%
   filter(`Regional indicator` %in% 
            c("Commonwealth of Independent States",
@@ -142,7 +143,8 @@ SS_mean <- WHR20 %>%
             = round(mean(`Social support`),2))%>%
   arrange(-Average)
 
-  SS_mean %>% kable() %>% 
+  SS_mean %>% 
+    kable(caption = "Average Social support of Regions from High to Low") %>%
       kable_styling(bootstrap_options = c("striped", "hover"))
 ```
 
@@ -158,7 +160,7 @@ mean(WHR20$`Social support`)
 quantile(WHR20$`Social support`)
 ```
 
-```{r SS-high}
+```{r SS-high, fig.cap = "Ladder Score vs Social Support for the Regions with Regional Average Social Support Higher than Global"}
  WHR20 %>%
   filter(!`Regional indicator` %in% 
            c("Middle East and North Africa",
@@ -174,7 +176,7 @@ quantile(WHR20$`Social support`)
   facet_wrap(~`Regional indicator`, ncol = 3)
 ```
 
-```{r SS-low}
+```{r SS-low, fig.cap = "Ladder Score vs Social Support for the Regions with Regional Average Social Support Lower than Global"}
  WHR20 %>%
   filter(`Regional indicator` %in% 
            c("Middle East and North Africa",
@@ -199,7 +201,8 @@ HLE_mean <- WHR20 %>%
             = round(mean(`Healthy life expectancy`),2))%>%
   arrange(-Average)
 
-  HLE_mean %>% kable() %>% 
+  HLE_mean %>% 
+    kable(caption = "Healthy life expectancy") %>%
       kable_styling(bootstrap_options = c("striped", "hover"))
 ```
 
@@ -215,7 +218,7 @@ mean(WHR20$`Healthy life expectancy`)
 quantile(WHR20$`Healthy life expectancy`)
 ```
 
-```{r HLE-high}
+```{r HLE-high, fig.cap = "Ladder Score vs Healthy Life Expectancy for the Regions with Regional Average Healthy Life Expectancy Higher than Global"}
  WHR20 %>%
   filter(!`Regional indicator` %in% 
            c("South Asia", 
@@ -230,7 +233,7 @@ quantile(WHR20$`Healthy life expectancy`)
   facet_wrap(~`Regional indicator`, ncol = 3)
 ```
 
-```{r HLE-low}
+```{r HLE-low, fig.cap = "Ladder Score vs Healthy Life Expectancy for the Regions with Regional Average Healthy Life Expectancy Lower than Global"}
  WHR20 %>%
   filter(`Regional indicator` %in% 
            c("South Asia", 
