@@ -76,9 +76,9 @@ WHR20 <- read_excel("Data/WHR20_DataForFigure2.1.xls")
 
 \subsection*{2.1 GDP}
 
-Table \@ref(tab:GDP-ord) shows the average Logged GDP per capita of Regions from high to low. The top 3 Region with highest GDP are North America and ANZ, Western Europe and East Asia, their GDP are all higher than 10. 
+Table \@ref(tab:GDP-ord) shows the average Logged GDP per capita of Regions from high to low. The top 3 Regions with the highest GDP are North America and ANZ, Western Europe and East Asia, their GDP are all higher than 10. 
 
-The average GDP for all the countries is `r mean(WHR20$`Logged GDP per capita`)`, and we found three regions' average GDP are lower than this level: Sub-Saharan Africa, South Asia, Commonwealth of Independent States. We divided into two groups, the regions that regional average GDP higher than global, and regions with regional GDP lower than global, to see how is the relationship between the Logged GDP per capita and Ladder score of countries in these regions.
+The average GDP for all the countries is `r mean(WHR20$`Logged GDP per capita`)`, and we found three regions' average GDP are lower than this level: Sub-Saharan Africa, South Asia, Commonwealth of Independent States. We divided into two groups, the regions that regional average GDP higher than global, and regions with regional GDP lower than global, to see how is the relationship between the Logged GDP per capita and Ladder Score of countries in these regions.
 
 ```{r GDP-ord}
 gdp_mean <- WHR20 %>% 
@@ -106,7 +106,9 @@ mean(WHR20$`Logged GDP per capita`)
 quantile(WHR20$`Logged GDP per capita`)
 ```
 
+In Figure \@ref(fig:GDP-high), We found the countries in Western Europe and North America and ANZ, and most of the countries in East Asia and Central and Eastern Europe, have a higher score on either Ladder Score and GDP. In the Middle East and North Africa and South Asia, they are polarized, several countries are with high GDP and high Ladder Scores, several got low scores either on Ladder Score or GDP.
 
+While what we found interesting and different from other Region is in Latin America and Caribbean, some countries even their GDP is lower than the average level, their Ladder Score is high. On the contrary, some countries in the Middle East and North Africa, they got higher GDP score, however, their Ladder Scores are low.
 
 ```{r GDP-high, fig.cap = "Ladder Score vs Logged GDP per Capita for the Regions with Regional Average GDP Higher than Global"}
  WHR20 %>%
@@ -124,6 +126,8 @@ quantile(WHR20$`Logged GDP per capita`)
   facet_wrap(~`Regional indicator`, ncol = 3)
 ```
 
+Below Figure \@ref(fig:GDP-low) shows the regions whose regional GDP scores are lower than the average GDP of all the countries, it indicates most countries in these regions, their Ladder Scores are also lower.
+
 ```{r GDP-low, fig.cap = "Ladder Score vs Logged GDP per Capita for the Regions with Regional Average GDP Lower than Global"}
  WHR20 %>%
   filter(`Regional indicator` %in% 
@@ -140,7 +144,11 @@ quantile(WHR20$`Logged GDP per capita`)
   facet_wrap(~`Regional indicator`, ncol = 3)
 ```
 
-\subsection*{2.2 Social support}
+\subsection*{2.2 Social Support}
+
+The average Social Support of regions from high to low is shown in Table \@ref(tab:SS-ord).
+
+The same method as GDP, we calculated the average Social Support of all counties, it is `r mean(WHR20$`Social support`)`. 
 
 ```{r SS-ord}
 SS_mean <- WHR20 %>% 
@@ -150,7 +158,7 @@ SS_mean <- WHR20 %>%
   arrange(-Average)
 
   SS_mean %>% 
-    kable(caption = "Average Social support of Regions from High to Low") %>%
+    kable(caption = "Average Social Support of Regions from High to Low") %>%
       kable_styling(bootstrap_options = c("striped", "hover"))
 ```
 
@@ -165,6 +173,10 @@ mean(WHR20$`Social support`)
 
 quantile(WHR20$`Social support`)
 ```
+
+Either the high Social Support group (shows in Figure \@ref(fig:SS-high)) or low Social Support group (Figure \@ref(fig:SS-low)), we nearly found no country has low Social Support score but got high Ladder Score. The relationship between Social Support and Ladder Score is close to a positive correlation. The better Social Support, the more possible it to get a better Ladder Score; on the opposite, as shown in Figure \@ref(fig:SS-low), the worse Social Support, the lower the Ladder Score. 
+
+But not all the high score Social Support countries also got high Ladder Scores. In Central and Eastern Europe, Commonwealth of Independent States, Middle East and North Africa, South Asia, and Sub-Saharan Africa, some countries with high Social Support scores got low Ladder Scores.
 
 ```{r SS-high, fig.cap = "Ladder Score vs Social Support for the Regions with Regional Average Social Support Higher than Global"}
  WHR20 %>%
@@ -200,6 +212,8 @@ quantile(WHR20$`Social support`)
 
 \subsection*{2.3 Social Healthy life expectancy}
 
+Table \@ref(tab:HLE-ord) shows the ranking of Social Healthy Life Expectancy score of regions.
+
 ```{r HLE-ord}
 HLE_mean <- WHR20 %>% 
   group_by(`Regional indicator`) %>% 
@@ -224,6 +238,8 @@ mean(WHR20$`Healthy life expectancy`)
 quantile(WHR20$`Healthy life expectancy`)
 ```
 
+In the high Healthy Life Expectancy score countries group, it shows a positive correlation in Southeast Asia, Middle East and North Africa and North America and ANZ. But we found in the Commonwealth of Independent States, Central and Eastern Europe, Western Europe, some countries are almost at the same level of Healthy life Expectancy, their Ladder Scores arrange from a big difference. See that in Figure \@ref(fig:HLE-high).
+
 ```{r HLE-high, fig.cap = "Ladder Score vs Healthy Life Expectancy for the Regions with Regional Average Healthy Life Expectancy Higher than Global"}
  WHR20 %>%
   filter(!`Regional indicator` %in% 
@@ -239,6 +255,8 @@ quantile(WHR20$`Healthy life expectancy`)
   facet_wrap(~`Regional indicator`, ncol = 3)
 ```
 
+Figure \@ref(fig:HLE-low) shows, in the low Healthy Life Expectancy region, they also have a low Ladder Score, while they don't look have a special relationship between Healthy Life Expectancy and Ladder Score. 
+
 ```{r HLE-low, fig.cap = "Ladder Score vs Healthy Life Expectancy for the Regions with Regional Average Healthy Life Expectancy Lower than Global"}
  WHR20 %>%
   filter(`Regional indicator` %in% 
@@ -252,6 +270,12 @@ quantile(WHR20$`Healthy life expectancy`)
   geom_hline(aes(yintercept = 64.44553),
              linetype = "dashed") +
   facet_wrap(~`Regional indicator`, ncol = 3)
+```
+
+```{r lm, eval = FALSE}
+lm <- lm(formula = `Ladder score` ~ `Logged GDP per capita` + `Social Support` + `Healthy life expectancy` + `Freedom to make life choices` + `Generosity` + `Perceptions of corruption`, data = WHR20)
+
+summary(lm)
 ```
 
 \clearpage
