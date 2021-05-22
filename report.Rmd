@@ -94,6 +94,8 @@ ggplot(WHR20, aes(x = `Logged GDP per capita`))+
                    mean(`Logged GDP per capita`)),
              linetype = "dashed")
 
+mean(WHR20$`Ladder score`)
+
 mean(WHR20$`Logged GDP per capita`)
 
 quantile(WHR20$`Logged GDP per capita`)
@@ -108,12 +110,14 @@ quantile(WHR20$`Logged GDP per capita`)
   ggplot(aes(x = `Ladder score`, 
              y = `Logged GDP per capita`)) +
   geom_point() +
+  geom_vline(aes(xintercept = 5.47324),
+             linetype = "dashed") +
   geom_hline(aes(yintercept =9.295706),
              linetype = "dashed") +
   facet_wrap(~`Regional indicator`, ncol = 3)
 ```
 
-```{r GDP-high}
+```{r GDP-low}
  WHR20 %>%
   filter(`Regional indicator` %in% 
            c("Commonwealth of Independent States",
@@ -122,6 +126,8 @@ quantile(WHR20$`Logged GDP per capita`)
   ggplot(aes(x = `Ladder score`, 
              y = `Logged GDP per capita`)) +
   geom_point() +
+  geom_vline(aes(xintercept = 5.47324),
+             linetype = "dashed") +
   geom_hline(aes(yintercept =9.295706),
              linetype = "dashed") +
   facet_wrap(~`Regional indicator`, ncol = 3)
@@ -161,12 +167,14 @@ quantile(WHR20$`Social support`)
   ggplot(aes(x = `Ladder score`, 
              y = `Social support`)) +
   geom_point() +
+  geom_vline(aes(xintercept = 5.47324),
+             linetype = "dashed") +
   geom_hline(aes(yintercept = 0.8087211),
              linetype = "dashed") +
   facet_wrap(~`Regional indicator`, ncol = 3)
 ```
 
-```{r SS-high}
+```{r SS-low}
  WHR20 %>%
   filter(`Regional indicator` %in% 
            c("Middle East and North Africa",
@@ -175,6 +183,8 @@ quantile(WHR20$`Social support`)
   ggplot(aes(x = `Ladder score`, 
              y = `Social support`)) +
   geom_point() +
+  geom_vline(aes(xintercept = 5.47324),
+             linetype = "dashed") +
   geom_hline(aes(yintercept = 0.8087211),
              linetype = "dashed") +
   facet_wrap(~`Regional indicator`, ncol = 3)
@@ -213,12 +223,14 @@ quantile(WHR20$`Healthy life expectancy`)
   ggplot(aes(x = `Ladder score`, 
              y = `Healthy life expectancy`)) +
   geom_point() +
+  geom_vline(aes(xintercept = 5.47324),
+             linetype = "dashed") +
   geom_hline(aes(yintercept = 64.44553),
              linetype = "dashed") +
   facet_wrap(~`Regional indicator`, ncol = 3)
 ```
 
-```{r HLE-high}
+```{r HLE-low}
  WHR20 %>%
   filter(`Regional indicator` %in% 
            c("South Asia", 
@@ -226,6 +238,8 @@ quantile(WHR20$`Healthy life expectancy`)
   ggplot(aes(x = `Ladder score`, 
              y = `Healthy life expectancy`)) +
   geom_point() +
+  geom_vline(aes(xintercept = 5.47324),
+             linetype = "dashed") +
   geom_hline(aes(yintercept = 64.44553),
              linetype = "dashed") +
   facet_wrap(~`Regional indicator`, ncol = 3)
