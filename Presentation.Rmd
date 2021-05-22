@@ -19,9 +19,185 @@ options(htmltools.dir.version = FALSE)
 library(tidyverse)
 library(palmerpenguins)
 library(datasets)
+library(tidyverse)
+library(readxl)
+library(kableExtra)
+library(bookdown)
+library(ggplot2)
+library(stringr)
+library(lubridate)
+```
+
+```{r read-data, echo = FALSE, message = FALSE, warning = FALSE}
+# Read the data
+WHR20 <- read_excel("Data/WHR20_DataForFigure2.1.xls")
+```
+
+## GDP
+
+```{r GDP-ord, echo = FALSE}
+gdp_mean <- WHR20 %>% 
+  group_by(`Regional indicator`) %>% 
+  summarise(Average 
+            = round(mean(`Logged GDP per capita`),2))%>%
+  arrange(-Average)
+
+  gdp_mean %>% 
+    kable() %>%
+      kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+---
+
+
+```{r GDP-high, fig.cap = "Ladder Score vs Logged GDP per Capita for the Regions with Regional Average GDP Higher than Global", echo = FALSE, fig.align="center}
+ WHR20 %>%
+  filter(!`Regional indicator` %in% 
+           c("Commonwealth of Independent States",
+             "South Asia", 
+             "Sub-Saharan Africa")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+             y = `Logged GDP per capita`)) +
+  geom_point() +
+  geom_vline(aes(xintercept = 5.47324),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept =9.295706),
+             linetype = "dashed") +
+  facet_wrap(~`Regional indicator`, ncol = 3)
+```
+
+---
+
+```{r GDP-low, fig.cap = "Ladder Score vs Logged GDP per Capita for the Regions with Regional Average GDP Lower than Global", echo = FALSE, fig.align="center}
+ WHR20 %>%
+  filter(`Regional indicator` %in% 
+           c("Commonwealth of Independent States",
+             "South Asia", 
+             "Sub-Saharan Africa")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+             y = `Logged GDP per capita`)) +
+  geom_point() +
+  geom_vline(aes(xintercept = 5.47324),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept =9.295706),
+             linetype = "dashed") +
+  facet_wrap(~`Regional indicator`, ncol = 3)
+```
+
+---
+
+## Social Support
+
+```{r SS-ord, echo = FALSE}
+SS_mean <- WHR20 %>% 
+  group_by(`Regional indicator`) %>% 
+  summarise(Average 
+            = round(mean(`Social support`),2))%>%
+  arrange(-Average)
+
+  SS_mean %>% 
+    kable() %>%
+      kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+---
+
+```{r SS-high, fig.cap = "Ladder Score vs Social Support for the Regions with Regional Average Social Support Higher than Global", echo = FALSE, fig.align="center}
+ WHR20 %>%
+  filter(!`Regional indicator` %in% 
+           c("Middle East and North Africa",
+             "South Asia", 
+             "Sub-Saharan Africa")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+             y = `Social support`)) +
+  geom_point() +
+  geom_vline(aes(xintercept = 5.47324),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept = 0.8087211),
+             linetype = "dashed") +
+  facet_wrap(~`Regional indicator`, ncol = 3)
+```
+
+---
+
+```{r SS-low, fig.cap = "Ladder Score vs Social Support for the Regions with Regional Average Social Support Lower than Global", echo = FALSE, fig.align="center}
+ WHR20 %>%
+  filter(`Regional indicator` %in% 
+           c("Middle East and North Africa",
+             "South Asia", 
+             "Sub-Saharan Africa")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+             y = `Social support`)) +
+  geom_point() +
+  geom_vline(aes(xintercept = 5.47324),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept = 0.8087211),
+             linetype = "dashed") +
+  facet_wrap(~`Regional indicator`, ncol = 3)
+```
+
+---
+
+## Social Healthy life expectancy
+
+```{r HLE-ord, echo = FALSE}
+HLE_mean <- WHR20 %>% 
+  group_by(`Regional indicator`) %>% 
+  summarise(Average 
+            = round(mean(`Healthy life expectancy`),2))%>%
+  arrange(-Average)
+
+  HLE_mean %>% 
+    kable() %>%
+      kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+---
+
+```{r HLE-high, fig.cap = "Ladder Score vs Healthy Life Expectancy for the Regions with Regional Average Healthy Life Expectancy Higher than Global", echo = FALSE, fig.align="center}
+ WHR20 %>%
+  filter(!`Regional indicator` %in% 
+           c("South Asia", 
+             "Sub-Saharan Africa")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+             y = `Healthy life expectancy`)) +
+  geom_point() +
+  geom_vline(aes(xintercept = 5.47324),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept = 64.44553),
+             linetype = "dashed") +
+  facet_wrap(~`Regional indicator`, ncol = 3)
+```
+
+---
+
+```{r HLE-low, fig.cap = "Ladder Score vs Healthy Life Expectancy for the Regions with Regional Average Healthy Life Expectancy Lower than Global", echo = FALSE, fig.align="center}
+ WHR20 %>%
+  filter(`Regional indicator` %in% 
+           c("South Asia", 
+             "Sub-Saharan Africa")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+             y = `Healthy life expectancy`)) +
+  geom_point() +
+  geom_vline(aes(xintercept = 5.47324),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept = 64.44553),
+             linetype = "dashed") +
+  facet_wrap(~`Regional indicator`, ncol = 3)
 ```
 
 
+
+
+
+
+
+
+
+
+
+
+---
 class: center, middle
 ![](https://media.giphy.com/media/OkJat1YNdoD3W/giphy.gif)
 
