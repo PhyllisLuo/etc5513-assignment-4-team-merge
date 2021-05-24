@@ -54,8 +54,6 @@ library(readxl)
 library(kableExtra)
 library(bookdown)
 library(ggplot2)
-library(stringr)
-library(lubridate)
 ```
 
 
@@ -110,7 +108,7 @@ In Figure \@ref(fig:GDP-high), We found the countries in Western Europe and Nort
 
 While what we found interesting and different from other Region is in Latin America and Caribbean, some countries even their GDP is lower than the average level, their Ladder Score is high. On the contrary, some countries in the Middle East and North Africa, they got higher GDP score, however, their Ladder Scores are low.
 
-```{r GDP-high, fig.cap = "Ladder Score vs Logged GDP per Capita for the Regions with Regional Average GDP Higher than Global"}
+```{r GDP-high, fig.cap = "Ladder Score vs GDP for the Regions with Regional GDP Means Higher than Total Means"}
  WHR20 %>%
   filter(!`Regional indicator` %in% 
            c("Commonwealth of Independent States",
@@ -128,7 +126,7 @@ While what we found interesting and different from other Region is in Latin Amer
 
 Below Figure \@ref(fig:GDP-low) shows the regions whose regional GDP scores are lower than the average GDP of all the countries, it indicates most countries in these regions, their Ladder Scores are also lower.
 
-```{r GDP-low, fig.cap = "Ladder Score vs Logged GDP per Capita for the Regions with Regional Average GDP Lower than Global"}
+```{r GDP-low, fig.cap = "Ladder Score vs GDP for the Regions with Regional GDP Means Lower than Total Means"}
  WHR20 %>%
   filter(`Regional indicator` %in% 
            c("Commonwealth of Independent States",
@@ -178,7 +176,7 @@ Either the high Social Support group (shows in Figure \@ref(fig:SS-high)) or low
 
 But not all the high score Social Support countries also got high Ladder Scores. In Central and Eastern Europe, Commonwealth of Independent States, Middle East and North Africa, South Asia, and Sub-Saharan Africa, some countries with high Social Support scores got low Ladder Scores.
 
-```{r SS-high, fig.cap = "Ladder Score vs Social Support for the Regions with Regional Average Social Support Higher than Global"}
+```{r SS-high, fig.cap = "Ladder Score vs Social Support for the Regions with Regional Social Support Means Higher than Total Means"}
  WHR20 %>%
   filter(!`Regional indicator` %in% 
            c("Middle East and North Africa",
@@ -194,7 +192,7 @@ But not all the high score Social Support countries also got high Ladder Scores.
   facet_wrap(~`Regional indicator`, ncol = 3)
 ```
 
-```{r SS-low, fig.cap = "Ladder Score vs Social Support for the Regions with Regional Average Social Support Lower than Global"}
+```{r SS-low, fig.cap = "Ladder Score vs Social Suppor Lower than Total Means"}
  WHR20 %>%
   filter(`Regional indicator` %in% 
            c("Middle East and North Africa",
@@ -210,7 +208,7 @@ But not all the high score Social Support countries also got high Ladder Scores.
   facet_wrap(~`Regional indicator`, ncol = 3)
 ```
 
-\subsection*{2.3 Social Healthy life expectancy}
+\subsection*{2.3 Healthy Life Expectancy}
 
 Table \@ref(tab:HLE-ord) shows the ranking of Social Healthy Life Expectancy score of regions.
 
@@ -240,7 +238,7 @@ quantile(WHR20$`Healthy life expectancy`)
 
 In the high Healthy Life Expectancy score countries group, it shows a positive correlation in Southeast Asia, Middle East and North Africa and North America and ANZ. But we found in the Commonwealth of Independent States, Central and Eastern Europe, Western Europe, some countries are almost at the same level of Healthy life Expectancy, their Ladder Scores arrange from a big difference. See that in Figure \@ref(fig:HLE-high).
 
-```{r HLE-high, fig.cap = "Ladder Score vs Healthy Life Expectancy for the Regions with Regional Average Healthy Life Expectancy Higher than Global"}
+```{r HLE-high, fig.cap = "Ladder Score vs Healthy Life Expectancy Higher than Total Means"}
  WHR20 %>%
   filter(!`Regional indicator` %in% 
            c("South Asia", 
@@ -257,7 +255,7 @@ In the high Healthy Life Expectancy score countries group, it shows a positive c
 
 Figure \@ref(fig:HLE-low) shows, in the low Healthy Life Expectancy region, they also have a low Ladder Score, while they don't look have a special relationship between Healthy Life Expectancy and Ladder Score. 
 
-```{r HLE-low, fig.cap = "Ladder Score vs Healthy Life Expectancy for the Regions with Regional Average Healthy Life Expectancy Lower than Global"}
+```{r HLE-low, fig.cap = "Ladder Score vs Healthy Life Expectancy Lower than Total Means"}
  WHR20 %>%
   filter(`Regional indicator` %in% 
            c("South Asia", 
@@ -289,4 +287,24 @@ summary(lm)
 \clearpage
 \section*{References}
 
+World Happiness Report. 2020. The World Happiness Report 2020. [online] Available at: https://worldhappiness.report/ed/2020/
 
+
+
+Hadley Wickham and Jennifer Bryan (2019). readxl: Read Excel Files. R package version 1.3.1. https://CRAN.R-project.org/package=readxl
+
+Wickham et al., (2019). Welcome to the tidyverse. Journal of Open Source Software, 4(43), 1686, https://doi.org/10.21105/joss.01686
+
+Sam Firke (2021). janitor: Simple Tools for Examining and Cleaning Dirty Data. R package version 2.1.0. https://CRAN.R-project.org/package=janitor
+
+C. Sievert. Interactive Web-Based Data Visualization with R, plotly, and shiny. Chapman and Hall/CRC Florida, 2020.
+
+Hao Zhu (2021). kableExtra: Construct Complex Table with 'kable' and Pipe Syntax. R package version 1.3.4. https://CRAN.R-project.org/package=kableExtra
+
+Yihui Xie (2020). bookdown: Authoring Books and Technical Documents with R Markdown. R package version 0.21.
+
+Yihui Xie (2016). bookdown: Authoring Books and Technical Documents with R Markdown. Chapman and Hall/CRC. ISBN 978-1138700109
+
+H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2016.
+
+Hadley Wickham (2019). stringr: Simple, Consistent Wrappers for Common String Operations. R package version 1.4.0. https://CRAN.R-project.org/package=stringr
