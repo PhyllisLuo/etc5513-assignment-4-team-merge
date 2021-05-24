@@ -50,8 +50,9 @@ WHR20 <- read_excel("Data/WHR20_DataForFigure2.1.xls")
 library(plotly)
 ```
 
+**Freedom to make life choices** is the national average of binary responses to the GWP question, “Are you satisfied or dissatisfied with your freedom to choose what you do with your life?” @WHReport.
 
-```{r}
+```{r, include=FALSE}
 free_avg <- WHR20 %>%
   group_by(`Regional indicator`) %>% 
   summarise(average = mean(`Freedom to make life choices`)) %>% 
@@ -68,7 +69,7 @@ knitr::kable(free_avg, caption = "The Average Freedom to Make Life Choices Score
                   fixed_thead = TRUE))
 ```
 
-The above table \@ref:(tab:tabfree) is the average "freedom to make life choices" score among all the regions. We divided them into three groups by the average score greater than 8.0, 0.75-0.80, and lower than 0.75.
+The above table \@ref:(tab:tabfree) is the average "freedom to make life choices" score among all the regions. We divided them into three groups by the average score greater than 0.80, 0.75-0.80, and lower than 0.75.
 
 ```{r freeh, fig.cap="The Group of High Freedom to Make Life Choices Score", fig.width=10}
  WHR20 %>%
@@ -83,7 +84,7 @@ The above table \@ref:(tab:tabfree) is the average "freedom to make life choices
              linetype = "dashed") 
 ```
 
-As the figure \@ref(fig:freeh) above, in the group of the "Freedom to make life choices" score is higher than 8.0, the ladder scores in Latin America and Caribbean, North America and ANZ, Western Europe are comparably high as well. Specifically, most of the points in these three rigions are on the right of the average line. However, in Southeast Asia, the points surrounding the average line represent the ladder scores are not as high as the others.
+As the figure \@ref(fig:freeh) above, in the group of the "Freedom to make life choices" score is higher than 0.80 the ladder scores in Latin America and Caribbean, North America and ANZ, Western Europe are comparably high as well. Specifically, most of the points in these three rigions are on the right of the average line. However, in Southeast Asia, the points surrounding the average line represent the ladder scores are not as high as the others.
 
 ```{r freem, fig.cap="The Group of Middle Freedom to Make Life Choices Score", fig.width=10}
 WHR20 %>%
@@ -119,6 +120,8 @@ From the above figure \@ref(fig:freel), in the low "Freedom to make life choices
 
 
 \subsection*{2.5 Generosity }
+
+Generosity is the residual of regressing the national average of GWP responses to the question, “Have you donated money to a charity in the past month?” on GDP per capita @WHReport.
 
 The table below \@ref:(tab:tabgene) is the average generosity score among all the regions. We divided them into two groups by the average score over and below 0.
 
@@ -171,6 +174,8 @@ The above figure \@ref(fig:genel) indicates that in the group of the generosity 
 *In general, the generosity score does not show a relationship with the ladder score.*
 
 \subsection*{2.6 Perceptions of corruption }
+
+Perceptions of corruption are the average of binary answers to two GWP questions: “Is corruption widespread throughout the government or not?” and “Is corruption widespread within businesses or not?” Where data for government corruption are missing, the perception of business corruption is used as the overall corruption-perception measure @WHReport. 
 
 The table below \@ref:(tab:tabcor) is the average "perceptions of corruption" score among all the regions. We divided them into three groups by the average score greater than 0.75, 0.70-0.75, lower than 0.70. 
 
