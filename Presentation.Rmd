@@ -32,15 +32,12 @@ WHR20 <- read_excel("Data/WHR20_DataForFigure2.1.xls")
 
 
 class: center, middle
-# Freedom to Make Life Choices 
-
-# v.s. 
-
-# Happiness
+# Freedom to Make Life Choices v.s. Happiness
 
 “Are you satisfied or dissatisfied with your freedom to choose what you do with your life?”
 
-![](figs/janie_img_01.png)
+![](figs/janie_img_01.jpeg)
+
 
 ---
 class: left, top
@@ -130,6 +127,7 @@ class: center, middle
 “Have you donated money to a charity in the past month?”
 
 ![](figs/janie_img_02.jpeg)
+
 ---
 class: left, top
 # Grouping
@@ -154,7 +152,7 @@ knitr::kable(gene_avg, caption = "The Average Generosity Score by Region",
 class: left, top
 # Group less than 0
 
-```{r geneh, fig.cap="The Group of the Generosity Score Less Than 0", fig.width=14, message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
+```{r geneh, fig.cap="The Group of the Generosity Score Less Than 0", fig.width=10, message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
  WHR20 %>%
   filter(`Regional indicator` %in% c("North America and ANZ","South Asia","Western Europe","South Asia","Sub-Saharan Africa")) %>% 
   ggplot(aes(x = `Ladder score`, 
@@ -172,7 +170,7 @@ class: left, top
 class: left, top
 # Group higher than 0
 
-```{r genel, fig.cap="The Group of the Generosity Score Higher Than 0", fig.width=14, message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
+```{r genel, fig.cap="The Group of the Generosity Score Higher Than 0", fig.width=10, message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
  WHR20 %>%
   filter(`Regional indicator` %in% c("Commonwealth of Independent States","East Asia","Latin America and Caribbean","Middle East and North Africa","Central and Eastern Europe")) %>% 
   ggplot(aes(x = `Ladder score`, 
@@ -202,7 +200,6 @@ class: center, middle
 “Is corruption widespread within businesses or not?”
 
 ![](figs/janie_img_03.jpeg)
-
 
 ---
 class: left, top
@@ -245,7 +242,7 @@ class: left, top
 class: left, top
 # Middle Group 
 
-```{r corm, fig.cap="The Group of Middle Perceptions of Corruption Score", fig.width=15, message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
+```{r corm, fig.cap="The Group of Middle Perceptions of Corruption Score", fig.width=10, message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
  WHR20 %>%
   filter(`Regional indicator` %in% c("South Asia","Sub-Saharan Africa","Middle East and North Africa", "Commonwealth of Independent States","Southeast Asia","East Asia")) %>% 
   ggplot(aes(x = `Ladder score`, 
@@ -262,7 +259,7 @@ class: left, top
 class: left, top
 # High Group 
 
-```{r corh, fig.cap="The Group of High Perceptions of Corruption Score", message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
+```{r corh, fig.cap="The Group of High Perceptions of Corruption Score", fig.width=10,  message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
  WHR20 %>%
   filter(`Regional indicator` %in% c("Central and Eastern Europe","Latin America and Caribbean")) %>% 
   ggplot(aes(x = `Ladder score`, 
