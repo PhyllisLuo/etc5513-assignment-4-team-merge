@@ -14,6 +14,9 @@ output:
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(echo = FALSE, 
+                      message=FALSE, 
+                      warning=FALSE)
 ```
 
 ```{r , echo = FALSE, message = FALSE, warning = FALSE}
@@ -391,6 +394,258 @@ class: center, middle
 
 - They also have a low Ladder Score, while they don't look have a special relationship between Healthy Life Expectancy and Ladder Score. 
 
+---
+class: center, middle
+# Freedom to Make Life Choices v.s. Happiness
+
+“Are you satisfied or dissatisfied with your freedom to choose what you do with your life?”
+
+![](figs/janie_img_01.jpeg)
+
+
+---
+class: left, top
+# Grouping
+
+```{r ,include=FALSE}
+free_avg <- WHR20 %>%
+  group_by(`Regional indicator`) %>% 
+  summarise(average = mean(`Freedom to make life choices`)) %>% 
+  arrange(desc(average))
+```
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
+knitr::kable(free_avg,
+      col.names = c("Region", "Average Score")) %>% 
+  kable_styling(c("hover", 
+                  "condensed",
+                  position = "center", 
+                  fixed_thead = TRUE))
+```
+
+---
+class: left, top
+# High Group
+
+```{r freeh, fig.cap="The Group of High Freedom to Make Life Choices Score", fig.width=10, message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
+ WHR20 %>%
+  filter(`Regional indicator` %in% c("Southeast Asia",  "North America and ANZ", "Western Europe", "Latin America and Caribbean")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+             y = `Freedom to make life choices`)) +
+  geom_point() +
+  facet_grid(~`Regional indicator`)+
+  geom_vline(aes(xintercept = mean(WHR20$`Ladder score`)),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept = mean(WHR20$`Freedom to make life choices`)),
+             linetype = "dashed") 
+```
+
+---
+class: left, top
+# Middle Group
+
+```{r freem, fig.cap="The Group of Middle Freedom to Make Life Choices Score", fig.width=10, message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
+WHR20 %>%
+  filter(`Regional indicator` %in% c("Commonwealth of Independent States", "South Asia", "Central and Eastern Europe", "East Asia")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+               y = `Freedom to make life choices`)) +
+  geom_point() +
+  facet_grid(~`Regional indicator`) +
+  geom_vline(aes(xintercept = mean(WHR20$`Ladder score`)),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept = mean(WHR20$`Freedom to make life choices`)),
+             linetype = "dashed") 
+```
+
+---
+class: left, top
+# Low Group
+
+```{r freel, fig.cap="The Group of Low Freedom to Make Life Choices Score", message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
+ WHR20 %>%
+  filter(`Regional indicator` %in% c("Sub-Saharan Africa", "Middle East and North Africa")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+               y = `Freedom to make life choices`)) +
+  geom_point() +
+  facet_grid(~`Regional indicator`) +
+  geom_vline(aes(xintercept = mean(WHR20$`Ladder score`)),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept = mean(WHR20$`Freedom to make life choices`)),
+             linetype = "dashed") 
+```
+
+---
+class: left, top
+# Is Freedom to Make Life Choices related to happiness?
+
+Except Southeast Asia, and Middle East and North Africa,
+
+.content-box-soft[ 
+the ladder score **is related to** the “Freedom to make life choices” score in most of the regions.
+]
+
+---
+class: center, middle
+# Generosity v.s. Happiness
+
+“Have you donated money to a charity in the past month?”
+
+![](figs/janie_img_02.jpeg)
+
+---
+class: left, top
+# Grouping
+
+```{r, include=FALSE}
+gene_avg  <- WHR20 %>%
+  group_by(`Regional indicator`) %>% 
+  summarise(average = mean(`Generosity`)) %>% 
+  arrange(desc(average))
+```
+
+```{r tabgene, message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
+knitr::kable(gene_avg, caption = "The Average Generosity Score by Region",
+                col.names = c("Region", "Average Score")) %>% 
+  kable_styling(c("hover", 
+                  "condensed",
+                  position = "center", 
+                  fixed_thead = TRUE))
+```
+
+---
+class: left, top
+# Group less than 0
+
+```{r geneh, fig.cap="The Group of the Generosity Score Less Than 0", fig.width=10, message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
+ WHR20 %>%
+  filter(`Regional indicator` %in% c("North America and ANZ","South Asia","Western Europe","South Asia","Sub-Saharan Africa")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+             y = `Generosity`)) +
+  geom_point() +
+  facet_grid(~`Regional indicator`) +
+  geom_vline(aes(xintercept = mean(WHR20$`Ladder score`)),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept = mean(WHR20$`Generosity`)),
+             linetype = "dashed") 
+```
+
+
+---
+class: left, top
+# Group higher than 0
+
+```{r genel, fig.cap="The Group of the Generosity Score Higher Than 0", fig.width=10, message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
+ WHR20 %>%
+  filter(`Regional indicator` %in% c("Commonwealth of Independent States","East Asia","Latin America and Caribbean","Middle East and North Africa","Central and Eastern Europe")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+               y = `Generosity`)) +
+  geom_point() +
+  facet_grid(~`Regional indicator`) +
+  geom_vline(aes(xintercept = mean(WHR20$`Ladder score`)),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept = mean(WHR20$`Generosity`)),
+             linetype = "dashed") 
+```
+
+
+---
+class: left, top
+# Is Generosity related to happiness?
+
+.content-box-soft[ 
+In general, the generosity score does **not** show a relationship with the ladder score.
+]
+
+
+---
+class: center, middle
+# Perceptions of corruption v.s. Happiness
+
+“Is corruption widespread within businesses or not?”
+
+![](figs/janie_img_03.jpeg)
+
+---
+class: left, top
+# Grouping
+```{r, include=FALSE}
+perc_avg  <- WHR20 %>%
+  group_by(`Regional indicator`) %>% 
+  summarise(average = mean(`Perceptions of corruption`)) %>% 
+  arrange(desc(average))
+```
+
+
+```{r tabcor, message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
+knitr::kable(perc_avg, caption = "The Perceptions of Corruption Score by Region",
+                col.names = c("Region", "Average Score")) %>% 
+  kable_styling(c("hover", 
+                  "condensed",
+                  position = "center", 
+                  fixed_thead = TRUE))
+```
+
+---
+class: left, top
+# Low Group 
+
+```{r corl, fig.cap="The Group of Low Perceptions of Corruption Score", message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
+ WHR20 %>%
+  filter(`Regional indicator` %in% c("Western Europe","North America and ANZ")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+               y = `Perceptions of corruption`)) +
+  geom_point() +
+  facet_grid(~`Regional indicator`) +
+  geom_vline(aes(xintercept = mean(WHR20$`Ladder score`)),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept = mean(WHR20$`Perceptions of corruption`)),
+             linetype = "dashed") 
+```
+
+---
+class: left, top
+# Middle Group 
+
+```{r corm, fig.cap="The Group of Middle Perceptions of Corruption Score", fig.width=10, message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
+ WHR20 %>%
+  filter(`Regional indicator` %in% c("South Asia","Sub-Saharan Africa","Middle East and North Africa", "Commonwealth of Independent States","Southeast Asia","East Asia")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+               y = `Perceptions of corruption`)) +
+  geom_point() +
+  facet_grid(~`Regional indicator`) +
+  geom_vline(aes(xintercept = mean(WHR20$`Ladder score`)),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept = mean(WHR20$`Perceptions of corruption`)),
+             linetype = "dashed") 
+```
+
+---
+class: left, top
+# High Group 
+
+```{r corh, fig.cap="The Group of High Perceptions of Corruption Score", fig.width=10,  message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
+ WHR20 %>%
+  filter(`Regional indicator` %in% c("Central and Eastern Europe","Latin America and Caribbean")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+               y = `Perceptions of corruption`)) +
+  geom_point() +
+  facet_grid(~`Regional indicator`) +
+  geom_vline(aes(xintercept = mean(WHR20$`Ladder score`)),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept = mean(WHR20$`Perceptions of corruption`)),
+             linetype = "dashed") 
+```
+
+
+---
+class: left, top
+# Is Perceptions of corruption related to happiness?
+
+.content-box-soft[ 
+- The lowest and the highest four regions all have a high ladder score. 
+
+- Most of the regions in the middle score groups show the middle ladder score.
+]
 
 ---
 class: center, middle
