@@ -394,7 +394,7 @@ free_avg <- WHR20 %>%
 ```
 
 ```{r, message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
-knitr::kable(free_avg,
+knitr::kable(free_avg, caption = "Average Freedom to Make Life Choices Score by Region",
       col.names = c("Region", "Average Score")) %>% 
   kable_styling(c("hover", 
                   "condensed",
