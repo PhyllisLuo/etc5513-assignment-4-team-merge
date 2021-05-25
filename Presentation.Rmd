@@ -1,8 +1,7 @@
 ---
-title: "Xaringan Template"
-subtitle: "An example"
-author: "Patricia Menéndez"
-institute: "Department of Econometrics and Business Statistics"
+title: "Analysis on World Happiness"
+author: "Team Merge"
+institute: "Masters of Business Anayltics"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -41,29 +40,9 @@ WHR20 <- read_excel("Data/WHR20_DataForFigure2.1.xls")
 class: center, middle
 # .red[World Happiness Report]
 ![](https://media.giphy.com/media/3NtY188QaxDdC/giphy.gif)
+.tiny[<span>Photo by <a href="https://giphy.com/disneyzootopia">Disney</a> on <a href="https://giphy.com/gifs/3NtY188QaxDdC/links">Giphy</a></span>]
 
 
----
-class: center, middle
-# Hello!
-
-Dr Patricia Menéndez
-```{r out.width = '35%', echo = FALSE, fig.align="center"}
-knitr::include_graphics("figs/patricia.jpeg")
-```
-
-Lecturer Department of Econometric and Business Statistics.
-
-
-
-
-
----
-# Of course Yourselves too!
-
-![](figs/baim-hanif-pYWuOMhtc6k-unsplash.jpg)
-
-.tiny[<span>Photo by <a href="https://unsplash.com/@baim?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Baim Hanif</a> on <a href="https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>]
 
 
 ---
@@ -444,6 +423,7 @@ class: left, top
 knitr::include_graphics("figs/factor.png")
 ```
 
+.tiny[<span>Photo by <a href="https://thriveglobal.com/stories/happiness-trends-up-except-where-it-matters-most/">Thrive Global</a></span>]
 ---
 class: center, middle
 
