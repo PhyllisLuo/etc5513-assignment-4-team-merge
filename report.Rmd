@@ -396,9 +396,9 @@ gene_avg  <- WHR20 %>%
 ```
 
 
-```{r geneh, fig.cap="The Group of the Generosity Score Less Than 0", fig.width=10}
+```{r geneh, fig.cap="The Group of the Generosity Score Higher Than 0", fig.width=10}
  WHR20 %>%
-  filter(`Regional indicator` %in% c("North America and ANZ","South Asia","Western Europe","South Asia","Sub-Saharan Africa")) %>% 
+  filter(`Regional indicator` %in% c("North America and ANZ","Southeast Asia","Western Europe","South Asia","Sub-Saharan Africa")) %>% 
   ggplot(aes(x = `Ladder score`, 
              y = `Generosity`)) +
   geom_point() +
@@ -409,10 +409,10 @@ gene_avg  <- WHR20 %>%
              linetype = "dashed") 
 ```
 
-From the above figure \@ref(fig:geneh), in the group of the generosity score less than 0, the ladder score in North America and ANZ, and Western Europe is higher than the average. On the contrary, in South Asia and Sub-Saharan Africa, the points overwhelmingly position left than the average line.
+From the above figure \@ref(fig:geneh), in the group of the generosity score higher than 0, the ladder score in North America and ANZ, and Western Europe is higher than the average. On the contrary, in South Asia and Sub-Saharan Africa, the points overwhelmingly position left than the average line. The points for Southeast Asia is around the average line.
 
 
-```{r genel, fig.cap="The Group of the Generosity Score Higher Than 0", fig.width=13}
+```{r genel, fig.cap="The Group of the Generosity Score Less Than 0", fig.width=13}
  WHR20 %>%
   filter(`Regional indicator` %in% c("Commonwealth of Independent States","East Asia","Latin America and Caribbean","Middle East and North Africa","Central and Eastern Europe")) %>% 
   ggplot(aes(x = `Ladder score`, 
@@ -425,7 +425,7 @@ From the above figure \@ref(fig:geneh), in the group of the generosity score les
              linetype = "dashed") 
 ```
 
-The above figure \@ref(fig:genel) indicates that in the group of the generosity score higher than 0, the ladder score distributed scattered around the average ladder score line.
+The above figure \@ref(fig:genel) indicates that in the group of the generosity score less than 0, except of Latin America and Caribbean, the ladder score distributed scattered around the average ladder score line.
 
 *In general, the generosity score does not show a relationship with the ladder score.*
 

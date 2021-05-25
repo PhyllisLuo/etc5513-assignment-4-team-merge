@@ -498,11 +498,11 @@ knitr::kable(gene_avg, caption = "The Average Generosity Score by Region",
 
 ---
 class: left, top
-# Group less than 0
+# Group higher than 0
 
 ```{r geneh, fig.cap="The Group of the Generosity Score Less Than 0", fig.width=10, message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
  WHR20 %>%
-  filter(`Regional indicator` %in% c("North America and ANZ","South Asia","Western Europe","South Asia","Sub-Saharan Africa")) %>% 
+  filter(`Regional indicator` %in% c("North America and ANZ","Southeast Asia","Western Europe","South Asia","Sub-Saharan Africa")) %>% 
   ggplot(aes(x = `Ladder score`, 
              y = `Generosity`)) +
   geom_point() +
@@ -516,7 +516,7 @@ class: left, top
 
 ---
 class: left, top
-# Group higher than 0
+# Group less than 0
 
 ```{r genel, fig.cap="The Group of the Generosity Score Higher Than 0", fig.width=10, message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
  WHR20 %>%
