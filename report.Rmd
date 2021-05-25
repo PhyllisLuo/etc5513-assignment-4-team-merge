@@ -1,39 +1,8 @@
 ---
-title: "World Happiness Report 2020"
-author:
-- familyname: Luo
-  othernames: Yu
-  address: Monash University
-  email: yluo0065@student.monash.com
-  correspondingauthor: true
-  qualifications:  Master
-- familyname: Thakker
-  othernames: Khushee
-  address: Monash University
-  email: ktha0021@student.monash.edu
-  qualifications: Master
-- familyname: Chen
-  othernames: Yunqi
-  address: Monash University
-  email: yche0454@student.monash.edu
-  correspondingauthor: true
-  qualifications:  Master
-organization: the World Bank data base
-bibliography: references.bib
-biblio-style: authoryear-comp
-linestretch: 1.5
-output:
-  bookdown::pdf_document2:
-    template: monashreport2.tex
-    fig_caption: yes
-    fig_height: 5
-    fig_width: 8
-    includes:
-      in_header: preamble.tex
-    keep_tex: yes
-    number_sections: yes
-    citation_package: biblatex
-    toc: false
+title: "Untitled"
+author: "T13_Wed_kable"
+date: "5/24/2021"
+output: html_document
 editor_options: 
   chunk_output_type: console
 ---
@@ -333,6 +302,200 @@ lm <- lm(formula = `Ladder score` ~ `Logged GDP per capita` + `Social Support` +
 
 summary(lm)
 ```
+
+
+\subsection*{2.4 Freedom to make life choices }
+
+**Freedom to make life choices** is the national average of binary responses to the GWP question, “Are you satisfied or dissatisfied with your freedom to choose what you do with your life?” @WHReport.
+
+```{r, include=FALSE}
+free_avg <- WHR20 %>%
+  group_by(`Regional indicator`) %>% 
+  summarise(average = mean(`Freedom to make life choices`)) %>% 
+  arrange(desc(average))
+```
+
+
+```{r tabfree}
+knitr::kable(free_avg, caption = "The Average Freedom to Make Life Choices Score by Region",
+      col.names = c("Region", "Average Score")) %>% 
+  kable_styling(c("hover", 
+                  "condensed",
+                  position = "center", 
+                  fixed_thead = TRUE))
+```
+
+The above table \@ref:(tab:tabfree) is the average "freedom to make life choices" score among all the regions. We divided them into three groups by the average score greater than 0.80, 0.75-0.80, and lower than 0.75.
+
+```{r freeh, fig.cap="The Group of High Freedom to Make Life Choices Score", fig.width=10}
+ WHR20 %>%
+  filter(`Regional indicator` %in% c("Southeast Asia",  "North America and ANZ", "Western Europe", "Latin America and Caribbean")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+             y = `Freedom to make life choices`)) +
+  geom_point() +
+  facet_grid(~`Regional indicator`)+
+  geom_vline(aes(xintercept = mean(WHR20$`Ladder score`)),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept = mean(WHR20$`Freedom to make life choices`)),
+             linetype = "dashed") 
+```
+
+As the figure \@ref(fig:freeh) above, in the group of the "Freedom to make life choices" score is higher than 0.80 the ladder scores in Latin America and Caribbean, North America and ANZ, Western Europe are comparably high as well. Specifically, most of the points in these three rigions are on the right of the average line. However, in Southeast Asia, the points surrounding the average line represent the ladder scores are not as high as the others.
+
+```{r freem, fig.cap="The Group of Middle Freedom to Make Life Choices Score", fig.width=10}
+WHR20 %>%
+  filter(`Regional indicator` %in% c("Commonwealth of Independent States", "South Asia", "Central and Eastern Europe", "East Asia")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+               y = `Freedom to make life choices`)) +
+  geom_point() +
+  facet_grid(~`Regional indicator`) +
+  geom_vline(aes(xintercept = mean(WHR20$`Ladder score`)),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept = mean(WHR20$`Freedom to make life choices`)),
+             linetype = "dashed") 
+```
+
+The above figure \@ref(fig:freem) is the group of regions with middle "Freedom to make life choices" score of 0.75-0.80.  The distribution of the points is generally surrounding the average line. However, in South Asia, most of the points are lower than the average.
+
+```{r freel, fig.cap="The Group of Low Freedom to Make Life Choices Score"}
+ WHR20 %>%
+  filter(`Regional indicator` %in% c("Sub-Saharan Africa", "Middle East and North Africa")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+               y = `Freedom to make life choices`)) +
+  geom_point() +
+  facet_grid(~`Regional indicator`) +
+  geom_vline(aes(xintercept = mean(WHR20$`Ladder score`)),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept = mean(WHR20$`Freedom to make life choices`)),
+             linetype = "dashed") 
+```
+
+From the above figure \@ref(fig:freel), in the low "Freedom to make life choices" score, which is less than 0.75, a tremendous amount of the points of Sub-Saharan Africa are on the left of the average line. However, the points are scattered evenly from high to low in the Middle East and North Africa. 
+
+*In general, the ladder score is related to the "Freedom to make life choices" score in most of the regions, except Southeast Asia, and Middle East and North Africa.*
+
+
+\subsection*{2.5 Generosity }
+
+Generosity is the residual of regressing the national average of GWP responses to the question, “Have you donated money to a charity in the past month?” on GDP per capita @WHReport.
+
+The table below \@ref:(tab:tabgene) is the average generosity score among all the regions. We divided them into two groups by the average score over and below 0.
+
+```{r tabgene}
+gene_avg  <- WHR20 %>%
+  group_by(`Regional indicator`) %>% 
+  summarise(average = mean(`Generosity`)) %>% 
+  arrange(desc(average))
+
+  knitr::kable(gene_avg, caption = "The Average Generosity Score by Region",
+                col.names = c("Region", "Average Score")) %>% 
+  kable_styling(c("hover", 
+                  "condensed",
+                  position = "center", 
+                  fixed_thead = TRUE))
+```
+
+
+```{r geneh, fig.cap="The Group of the Generosity Score Less Than 0", fig.width=10}
+ WHR20 %>%
+  filter(`Regional indicator` %in% c("North America and ANZ","South Asia","Western Europe","South Asia","Sub-Saharan Africa")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+             y = `Generosity`)) +
+  geom_point() +
+  facet_grid(~`Regional indicator`) +
+  geom_vline(aes(xintercept = mean(WHR20$`Ladder score`)),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept = mean(WHR20$`Generosity`)),
+             linetype = "dashed") 
+```
+
+From the above figure \@ref(fig:geneh), in the group of the generosity score less than 0, the ladder score in North America and ANZ, and Western Europe is higher than the average. On the contrary, in South Asia and Sub-Saharan Africa, the points overwhelmingly position left than the average line.
+
+
+```{r genel, fig.cap="The Group of the Generosity Score Higher Than 0", fig.width=13}
+ WHR20 %>%
+  filter(`Regional indicator` %in% c("Commonwealth of Independent States","East Asia","Latin America and Caribbean","Middle East and North Africa","Central and Eastern Europe")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+               y = `Generosity`)) +
+  geom_point() +
+  facet_grid(~`Regional indicator`) +
+  geom_vline(aes(xintercept = mean(WHR20$`Ladder score`)),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept = mean(WHR20$`Generosity`)),
+             linetype = "dashed") 
+```
+
+The above figure \@ref(fig:genel) indicates that in the group of the generosity score higher than 0, the ladder score distributed scattered around the average ladder score line.
+
+*In general, the generosity score does not show a relationship with the ladder score.*
+
+\subsection*{2.6 Perceptions of corruption }
+
+Perceptions of corruption are the average of binary answers to two GWP questions: “Is corruption widespread throughout the government or not?” and “Is corruption widespread within businesses or not?” Where data for government corruption are missing, the perception of business corruption is used as the overall corruption-perception measure @WHReport. 
+
+The table below \@ref:(tab:tabcor) is the average "perceptions of corruption" score among all the regions. We divided them into three groups by the average score greater than 0.75, 0.70-0.75, lower than 0.70. 
+
+```{r tabcor}
+perc_avg  <- WHR20 %>%
+  group_by(`Regional indicator`) %>% 
+  summarise(average = mean(`Perceptions of corruption`)) %>% 
+  arrange(desc(average))
+
+knitr::kable(perc_avg, caption = "The Perceptions of Corruption Score by Region",
+                col.names = c("Region", "Average Score")) %>% 
+  kable_styling(c("hover", 
+                  "condensed",
+                  position = "center", 
+                  fixed_thead = TRUE))
+```
+
+
+```{r corl, fig.cap="The Group of Low Perceptions of Corruption Score"}
+ WHR20 %>%
+  filter(`Regional indicator` %in% c("Western Europe","North America and ANZ")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+               y = `Perceptions of corruption`)) +
+  geom_point() +
+  facet_grid(~`Regional indicator`) +
+  geom_vline(aes(xintercept = mean(WHR20$`Ladder score`)),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept = mean(WHR20$`Perceptions of corruption`)),
+             linetype = "dashed") 
+```
+
+From the figure \@ref(fig:corl), in the group of low "perceptions of corruption" scores with less than 0.70, surprisingly, all the points are at the right of the average ladder score line. This means that if the region has low "perceptions of corruption" scores, the ladder score would be high.
+
+```{r corm, fig.cap="The Group of Middle Perceptions of Corruption Score", fig.width=15}
+ WHR20 %>%
+  filter(`Regional indicator` %in% c("South Asia","Sub-Saharan Africa","Middle East and North Africa", "Commonwealth of Independent States","Southeast Asia","East Asia")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+               y = `Perceptions of corruption`)) +
+  geom_point() +
+  facet_grid(~`Regional indicator`) +
+  geom_vline(aes(xintercept = mean(WHR20$`Ladder score`)),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept = mean(WHR20$`Perceptions of corruption`)),
+             linetype = "dashed") 
+```
+
+From the figure \@ref(fig:corm), in the group of middle "perceptions of corruption" scores with between 0.70 and 0.80, except South Asia and Sub-Saharan Africa shows lower ladder score, the other regions all indicate a middle ladder score.
+
+```{r corh, fig.cap="The Group of High Perceptions of Corruption Score"}
+ WHR20 %>%
+  filter(`Regional indicator` %in% c("Central and Eastern Europe","Latin America and Caribbean")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+               y = `Perceptions of corruption`)) +
+  geom_point() +
+  facet_grid(~`Regional indicator`) +
+  geom_vline(aes(xintercept = mean(WHR20$`Ladder score`)),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept = mean(WHR20$`Perceptions of corruption`)),
+             linetype = "dashed") 
+```
+
+The above figure \@ref(fig:corh) is the group of regions with high "perceptions of corruption" scores greater than 0.80. In Central and Eastern Europe, and Latin America and Caribbean, most of the points are on the right of the average line. This means, the region with high "perceptions of corruption" scores could lead to a comparably high ladder score.
+
+*In conclusion, as for the "perceptions of corruption" score, the lowest and the highest four regions all have a high ladder score. Most of the regions in the middle score groups show the middle ladder score.*
 
 \clearpage
 \section*{3 }
