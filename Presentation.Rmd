@@ -131,23 +131,59 @@ The group determined that the **“happiest”** countries were located in **Wes
 Meanwhile the **“least happiest”** countries were located in **Sub-Saharan Africa** and **South Asia**. 
 ]
 
+---
+class: center, middle
+# Compare Top5, Middle5 and Worst5 Countries
+
+```{r include=FALSE}
+top5 <- happiness %>% head(5) %>% mutate(Level = "TOP5")
+middle5 <- happiness[76:80, ] %>% mutate(Level = "MIDDLE5")
+worst5 <- happiness %>% tail(5) %>% mutate(Level = "WORST5")
+
+comparison <- bind_rows(top5, middle5, worst5)
+
+comparison$Level <- as.factor(comparison$Level)
+comparison <- transform(comparison, Level = factor(Level, levels = c("TOP5", "MIDDLE5", "WORST5" )))
+```
+
+```{r include=FALSE}
+
+data.table(comparison,
+          options = list(
+            lengthMenu = c(5, 10, 15)
+          ),
+          caption = 
+            htmltools::tags$caption(
+              style = 'caption-side: bottom; text-align: center;', 
+              htmltools::em('Data table that only includes top5, middle5 and worst5 countries'))
+          )
+
+```
+
+```{r include=FALSE}
+comparison.score <- comparison %>% rename("Economy GDP" = "logged_gdp_per_capita" , "Social Support" = "social_support" , "Health" = "healthy_life_expectancy", "Freedom" = "freedom_to_make_life_choices", "Corruption" ="perceptions_of_corruption") %>% 
+  gather(key = "columns", value = "score", happiness_score:Corruption)
+
+```
 
 
+```{r compare, fig.width=10, echo=FALSE, warning=FALSE, message=FALSE}
+comparison.score %>% 
+  ggplot(aes(x = Level, y = score, colour = Level, fill = Level)) + 
+  geom_boxplot(position=position_dodge(width=1)) + facet_wrap(~columns, scales = "free") 
+
+
+```
 
 
 ---
 class: left, top
-# This is an example of using boxes around txt
-.content-box-soft[ 
-- Understand the aims and structure of the unit
+.content-box-green[
+* Analyzing data of Global Happiness Levels in the world,we were able to discover the impact of each different factor in determining “happiness.”
+* Factors to determine happiness score of a country are GDP, Freedom to make choices, how less is the corruption, generosity, heath and social support.
+* To understand the relations between factors and happiness score we have take data for the top, median and bottom five countries according to ranked scores. 
+* We observe that the countries with highest happiness score have a better GDP, less corruption, more freedom to make choices, good health ratio, more generosity and receive social support. 
 ]
-
-
-.content-box-soft[ 
-* Introduce the main tools that we are going to use during the lectures/tutorials
-]
-
-
 
 ---
 class: left, top
