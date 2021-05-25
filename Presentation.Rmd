@@ -19,11 +19,27 @@ options(htmltools.dir.version = FALSE)
 library(tidyverse)
 library(palmerpenguins)
 library(datasets)
+library(readxl)
+library(kableExtra)
+library(bookdown)
+library(ggplot2)
+library(stringr)
+library(lubridate)
+library("janitor")
+library("kableExtra")
+library("plotly")
+library("countrycode")
+library(data.table)
 ```
 
+```{r read-data, include=FALSE}
+# Read the data
+WHR20 <- read_excel("Data/WHR20_DataForFigure2.1.xls")
+```
 
 class: center, middle
-![](https://media.giphy.com/media/OkJat1YNdoD3W/giphy.gif)
+# .red[World Happiness Report]
+![](https://media.giphy.com/media/3NtY188QaxDdC/giphy.gif)
 
 
 ---
@@ -49,6 +65,75 @@ Lecturer Department of Econometric and Business Statistics.
 .tiny[<span>Photo by <a href="https://unsplash.com/@baim?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Baim Hanif</a> on <a href="https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>]
 
 
+---
+class: center, middle
+# Introduction
+
+.content-box-green[ 
+Countries are ranked each year based on a **Happiness Index**. This index rates the happiness of countries on a scale from 0 to 10, and it’s pretty fascinating! <br>
+Happiness Index an indexation of happiness based on survey results, that was first used in the 2012 World Happiness Report. In the survey, the respondents were asked to rate their happiness on a scale from 0 to 10. The Happiness Index is calculated by averaging the survey results of the respondents.
+]
+
+---
+class: center, middle
+# Happiness Score by Region
+
+```{r include=FALSE}
+happiness <- WHR20 %>% 
+  select(`Country name`,`Regional indicator`,`Ladder score`,`Logged GDP per capita`,`Social support`,`Healthy life expectancy`,`Freedom to make life choices`,Generosity,`Perceptions of corruption`) %>% 
+  mutate(`Happiness Rank` = rank(-`Ladder score`)) %>% 
+  rename(`Happiness Score` = `Ladder score`) %>% clean_names()
+
+#happiness rank : the more the ladder score the higher the rank              
+
+```
+
+```{r regiontable, include=FALSE}
+reg_avg <- happiness %>%
+  select(regional_indicator,happiness_score) %>%
+  group_by(regional_indicator) %>%
+  summarize(Average = mean(happiness_score)) %>% 
+  arrange(-Average)
+
+```
+
+```{r include=FALSE}
+happiness$iso3 <- countrycode(happiness$country_name, 'country.name', 'iso3c')
+
+happiness[happiness$country_name=="Kosovo","iso3"] <- "XKX"
+
+
+```
+
+```{r region, fig.align='center',fig.height=6,fig.width=10, echo=FALSE, warning=FALSE, message=FALSE}
+plot_ly(happiness, x=~regional_indicator,
+              y=~happiness_score,
+              type="box",
+              boxpoints="all",
+              color=~regional_indicator,
+        text = ~paste("<b>Region:</b> ", regional_indicator,
+                      "<br><b>Country:</b> ", country_name,
+                      "<br><b>Happiness Score:</b>", happiness_score))%>%
+  layout(xaxis=list(showticklabels = FALSE),
+         yaxis=list(title="Happiness Score"),
+         legend=list(font = (size = 5)),
+         margin=list(b = 100),
+         title="Box Plot of Happiness Score by Region")
+```
+
+---
+class: center, middle
+.content-box-green[ 
+We have collected happiness data from World Happiness Report for 2020. It has global happiness that ranks 156 countries by how happy their citizens perceive themselves to be.<br>
+We grouped the countries into different regions in the world to observe which region is the happiest.<br>
+From the box plot we see that the happiness scores are quite different among these regions. <br>
+The group determined that the **“happiest”** countries were located in **Western Europe**, particularly Finland and Denmark.<br>
+Meanwhile the **“least happiest”** countries were located in **Sub-Saharan Africa** and **South Asia**. 
+]
+
+
+
+
 
 ---
 class: left, top
@@ -57,9 +142,7 @@ class: left, top
 - Understand the aims and structure of the unit
 ]
 
-.content-box-duke-green[ 
-* Explain the need for reproducible and collaborative practices
-]
+
 .content-box-soft[ 
 * Introduce the main tools that we are going to use during the lectures/tutorials
 ]
@@ -183,7 +266,6 @@ class: left, top
 
 ```{r }
 c(1:10)
-
 ```
 
 
@@ -218,7 +300,6 @@ ggplot(data = penguins,
     values = c("darkorange",
                "darkorchid",
                "cyan4"))
-
 ```
 ]
 
@@ -235,7 +316,6 @@ ggplot(data = penguins,
     values = c("darkorange",
                "darkorchid",
                "cyan4"))
-
 ```
 ]
 
@@ -257,7 +337,6 @@ ggplot(data = penguins,
     values = c("darkorange",
                "darkorchid",
                "cyan4"))
-
 ```
 ]
 
@@ -274,7 +353,6 @@ ggplot(data = penguins,
     values = c("darkorange",
                "darkorchid",
                "cyan4"))
-
 ```
 ]
 
@@ -288,11 +366,9 @@ iris2 <- head(iris)
 knitr::kable(iris2,
              col.names = gsub("[.]", " ",
                               names(iris)))
-
 ```
 
 ---
 
 ```{r endslide, child="EndSlide/endslide.Rmd"}
 ```  
-
