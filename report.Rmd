@@ -102,7 +102,7 @@ happiness[happiness$country_name=="Kosovo","iso3"] <- "XKX"
 
 ```
 
-```{r fig.align='center',fig.height=5,fig.width=8}
+```{r region , fig.cap = "Happiness Score by Region", fig.align='center',fig.height=5,fig.width=8}
 plot_ly(happiness, x=~regional_indicator,
               y=~happiness_score,
               type="box",
@@ -123,7 +123,7 @@ plot_ly(happiness, x=~regional_indicator,
 
 We have collected happiness data from World Happiness Report for 2020. It has global happiness that ranks 156 countries by how happy their citizens perceive themselves to be.<br>
 We grouped the countries into different regions in the world to observe which region is the happiest.<br>
-From the box plot we see that the happiness scores are quite different among these regions. <br>
+From the box plot \@ref(fig:region) we see that the happiness scores are quite different among these regions. <br>
 The group determined that the **“happiest”** countries were located in **Western Europe**, particularly Finland and Denmark.<br>
 Meanwhile the **“least happiest”** countries were located in **Sub-Saharan Africa** and **South Asia**. 
 
@@ -175,7 +175,7 @@ comparison.score <- comparison %>% rename("Economy GDP" = "logged_gdp_per_capita
 ```
 
 
-```{r  fig.width=10}
+```{r compare, fig.cap="Compare top, median and bottom five countries",  fig.width=10}
 comparison.score %>% 
   ggplot(aes(x = Level, y = score, colour = Level, fill = Level)) + 
   geom_boxplot(position=position_dodge(width=1)) + facet_wrap(~columns, scales = "free") 
@@ -185,7 +185,7 @@ comparison.score %>%
 
 * Analyzing data of Global Happiness Levels in the world,we were able to discover the impact of each different factor in determining “happiness.”
 * Factors to determine happiness score of a country are GDP, Freedom to make choices, how less is the corruption, generosity, heath and social support.
-* To understand the relations between factors and happiness score we have take data for the top, median and bottom five countries according to ranked scores.
+* To understand the relations between factors and happiness score we have take data for the top, median and bottom five countries according to ranked scores in the above figure \@ref(fig:compare).
 * We observe that the countries with highest happiness score have a better GDP, less corruption, more freedom to make choices, good health ratio, more generosity and receive social support. 
 
 
@@ -195,11 +195,11 @@ comparison.score %>%
 
 The WHR calculates how much of the Happiness Index can be explained by the key factors. Add them all up and you should get close to the actual number. <br>
 
-From the below map you can easily spot the happiest country, Finland. <br>
+From the below map \@ref(fig:map) you can easily spot the happiest country, Finland. <br>
 Finland is ranked 1st according to the happiness score it has. It is said one of the reason why Finnish people are so happy is that they do not have to deal with corruption and black money. <br>
 Countries such as Afghanistan and South Sudan have least happiness score.
 
-```{r  fig.width=8}
+```{r map, fig.cap= "World Happiness Map", fig.width=8}
 
 fig <- plot_ly(happiness, type='choropleth', locations= happiness$iso3 , z= happiness$happiness_score, text= ~paste(
                       "<br><b>Country:</b> ", country_name,
