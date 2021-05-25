@@ -709,8 +709,15 @@ fig <- fig %>% layout(
 fig
 ```
 
+---
+class: left, top
+#Conclusion
 
+* **Freedom to make life choices** is related to ladder score.
 
+* **Generosity** is not related to ladder score.
+
+* **Perceptions of corruption** in the highest and the lowest regions has higher ladder score.
 
 ---
 
