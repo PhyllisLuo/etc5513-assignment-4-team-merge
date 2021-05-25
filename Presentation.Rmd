@@ -8,6 +8,7 @@ output:
     lib_dir: libs
     css: css/style.css
     yolo: FALSE
+    
 ---
 
 
@@ -17,9 +18,7 @@ options(htmltools.dir.version = FALSE)
 
 ```{r , echo = FALSE, message = FALSE, warning = FALSE}
 library(tidyverse)
-library(palmerpenguins)
 library(datasets)
-library(tidyverse)
 library(readxl)
 library(kableExtra)
 library(bookdown)
@@ -27,12 +26,107 @@ library(ggplot2)
 library(stringr)
 library(lubridate)
 library(plotly)
+library("janitor")
+library("kableExtra")
+library("plotly")
+library("countrycode")
+library(data.table)
 ```
 
-```{r read-data, echo = FALSE, message = FALSE, warning = FALSE}
+```{r read-data, include=FALSE}
 # Read the data
 WHR20 <- read_excel("Data/WHR20_DataForFigure2.1.xls")
 ```
+
+class: center, middle
+# .red[World Happiness Report]
+![](https://media.giphy.com/media/3NtY188QaxDdC/giphy.gif)
+
+
+---
+class: center, middle
+# Hello!
+
+Dr Patricia Menéndez
+```{r out.width = '35%', echo = FALSE, fig.align="center"}
+knitr::include_graphics("figs/patricia.jpeg")
+```
+
+Lecturer Department of Econometric and Business Statistics.
+
+
+
+
+
+---
+# Of course Yourselves too!
+
+![](figs/baim-hanif-pYWuOMhtc6k-unsplash.jpg)
+
+.tiny[<span>Photo by <a href="https://unsplash.com/@baim?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Baim Hanif</a> on <a href="https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>]
+
+
+---
+class: center, middle
+# Introduction
+
+### Did you know countries are ranked each year based on a Happiness Index?
+
+.content-box-green[ 
+Countries are ranked each year based on a **Happiness Index**. This index rates the happiness of countries on a scale from 0 to 10, and it’s pretty fascinating!
+]
+
+
+---
+class: center, middle
+# Happiness Score by Region
+
+```{r include=FALSE}
+happiness <- WHR20 %>% 
+  select(`Country name`,`Regional indicator`,`Ladder score`,`Logged GDP per capita`,`Social support`,`Healthy life expectancy`,`Freedom to make life choices`,Generosity,`Perceptions of corruption`) %>% 
+  mutate(`Happiness Rank` = rank(-`Ladder score`)) %>% 
+  rename(`Happiness Score` = `Ladder score`) %>% clean_names()
+#happiness rank : the more the ladder score the higher the rank              
+```
+
+```{r regiontable, include=FALSE}
+reg_avg <- happiness %>%
+  select(regional_indicator,happiness_score) %>%
+  group_by(regional_indicator) %>%
+  summarize(Average = mean(happiness_score)) %>% 
+  arrange(-Average)
+```
+
+```{r include=FALSE}
+happiness$iso3 <- countrycode(happiness$country_name, 'country.name', 'iso3c')
+happiness[happiness$country_name=="Kosovo","iso3"] <- "XKX"
+```
+
+```{r region, fig.align='center',fig.height=6,fig.width=10, echo=FALSE, warning=FALSE, message=FALSE}
+plot_ly(happiness, x=~regional_indicator,
+              y=~happiness_score,
+              type="box",
+              boxpoints="all",
+              color=~regional_indicator,
+        text = ~paste("<b>Region:</b> ", regional_indicator,
+                      "<br><b>Country:</b> ", country_name,
+                      "<br><b>Happiness Score:</b>", happiness_score))%>%
+  layout(xaxis=list(showticklabels = FALSE),
+         yaxis=list(title="Happiness Score"),
+         legend=list(font = (size = 5)),
+         margin=list(b = 100),
+         title="Box Plot of Happiness Score by Region")
+```
+
+---
+class: left, top
+## Which Region looks the happiest?
+
+* We have collected happiness data from World Happiness Report for 2020. It has global happiness that ranks 156 countries by how happy their citizens perceive themselves to be.<br>
+
+* The group determined that the **“happiest”** countries were located in **Western Europe**, particularly Finland and Denmark.<br>
+* Meanwhile the **“least happiest”** countries were located in **Sub-Saharan Africa** and **South Asia**. 
+
 
 
 ---
@@ -296,3 +390,81 @@ class: center, middle
 **In Low Healthy Life Expectancy Score Regions:**
 
 - They also have a low Ladder Score, while they don't look have a special relationship between Healthy Life Expectancy and Ladder Score. 
+
+
+---
+class: center, middle
+## Compare Top5, Middle5 and Worst5 Countries
+
+```{r include=FALSE}
+top5 <- happiness %>% head(5) %>% mutate(Level = "TOP5")
+middle5 <- happiness[76:80, ] %>% mutate(Level = "MIDDLE5")
+worst5 <- happiness %>% tail(5) %>% mutate(Level = "WORST5")
+comparison <- bind_rows(top5, middle5, worst5)
+comparison$Level <- as.factor(comparison$Level)
+comparison <- transform(comparison, Level = factor(Level, levels = c("TOP5", "MIDDLE5", "WORST5" )))
+```
+
+```{r include=FALSE}
+data.table(comparison,
+          options = list(
+            lengthMenu = c(5, 10, 15)
+          ),
+          caption = 
+            htmltools::tags$caption(
+              style = 'caption-side: bottom; text-align: center;', 
+              htmltools::em('Data table that only includes top5, middle5 and worst5 countries'))
+          )
+```
+
+```{r include=FALSE}
+comparison.score <- comparison %>% rename("Economy GDP" = "logged_gdp_per_capita" , "Social Support" = "social_support" , "Health" = "healthy_life_expectancy", "Freedom" = "freedom_to_make_life_choices", "Corruption" ="perceptions_of_corruption") %>% 
+  gather(key = "columns", value = "score", happiness_score:Corruption)
+```
+
+
+```{r compare, fig.width=10, echo=FALSE, warning=FALSE, message=FALSE}
+comparison.score %>% 
+  ggplot(aes(x = Level, y = score, colour = Level, fill = Level)) + 
+  geom_boxplot(position=position_dodge(width=1)) + facet_wrap(~columns, scales = "free") 
+```
+
+
+
+
+---
+class: left, top
+## Factors determining Happiness.
+
+* Analyzing data of Global Happiness Levels in the world,we were able to discover the impact of each different factor in determining “happiness.”
+
+* We observe that the countries with highest happiness score have a better GDP, less corruption, more freedom to make choices, good health ratio, more generosity and receive social support. 
+
+```{r out.width = '35%', echo = FALSE, fig.align="center"}
+knitr::include_graphics("figs/factor.png")
+```
+
+---
+class: center, middle
+
+**Happiness Score for Countries**
+
+The WHR calculates how much of the Happiness Index can be explained by the key factors. Add them all up and you should get close to the actual number. <br>
+
+```{r map, fig.width=10, echo=FALSE, warning=FALSE, message=FALSE}
+fig <- plot_ly(happiness, type='choropleth', locations= happiness$iso3 , z= happiness$happiness_score, text= ~paste(
+                      "<br><b>Country:</b> ", country_name,
+                      "<br><b>Happiness rank:</b>", happiness_rank), colorscale="Viridis")
+fig <- fig %>% colorbar(title = "Happiness Score" )
+fig <- fig %>% layout(
+    title = 'World Happiness Map, Year 2020')
+fig
+```
+
+
+
+
+---
+
+```{r endslide, child="EndSlide/endslide.Rmd"}
+```  
