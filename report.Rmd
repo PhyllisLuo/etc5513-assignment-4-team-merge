@@ -74,9 +74,9 @@ WHR20 <- read_excel("Data/WHR20_DataForFigure2.1.xls")
 
 \subsection*{2.1 GDP}
 
-Table \@ref(tab:GDP-ord) shows the average Logged GDP per capita of Regions from high to low. The top 3 Regions with the highest GDP are North America and ANZ, Western Europe and East Asia, their GDP are all higher than 10. 
+Table \@ref(tab:GDP-ord) shows the average Logged GDP per capita of Regions from high to low. The top 3 regions with the highest GDP are North America and ANZ, Western Europe and East Asia, their GDP is all higher than 10. 
 
-The average GDP for all the countries is `r mean(WHR20$`Logged GDP per capita`)`, and we found three regions' average GDP are lower than this level: Sub-Saharan Africa, South Asia, Commonwealth of Independent States. We divided into two groups, the regions that regional average GDP higher than global, and regions with regional GDP lower than global, to see how is the relationship between the Logged GDP per capita and Ladder Score of countries in these regions.
+The average GDP for all the countries is `r mean(WHR20$`Logged GDP per capita`)`, and we found three regions' average GDP are lower than this level: Sub-Saharan Africa, South Asia, Commonwealth of Independent States. We divided into two groups, the regions that regional average GDP higher than global, and regions with regional GDP lower than global, to see how is the relationship between the Logged GDP per capita and the Ladder Score of countries in these regions.
 
 ```{r GDP-ord}
 gdp_mean <- WHR20 %>% 

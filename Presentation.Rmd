@@ -34,7 +34,7 @@ library(plotly)
 WHR20 <- read_excel("Data/WHR20_DataForFigure2.1.xls")
 ```
 
-## GDP
+## Ladder Score vs Logged GDP per capita in Different Regions
 
 ```{r GDP-ord, echo = FALSE, out.width='80%', fig.height = 4.5}
 gdp_mean <- WHR20 %>% 
@@ -50,7 +50,7 @@ gdp_mean <- WHR20 %>%
 
 ---
 
-### Ladder Score vs Logged GDP for the High GDP Regions
+### Ladder Score vs GDP for the High GDP Regions
 
 ```{r GDP-high, echo = FALSE, fig.align="center", out.width='80%', fig.height = 4.5}
 WHR20 %>%
@@ -95,7 +95,21 @@ WHR20 %>%
 
 ---
 
-## Social Support
+**In High GDP Regions:**
+
+- Counties in most regions, they are with either high GDP and high Ladder Score or low GDP and low Ladder Scores.
+
+- In Central and Eastern Europe and Middle East and North Africa, some countries got high GDP scores but low Ladder Scores.
+
+- In Latin America and Caribbean, some countries even their GDP are low but have high Ladder Scores.
+
+**In Low GDP Regions:**
+
+- In above low GDP countries, most are low GDP and low Ladder Scores.
+
+---
+
+## Ladder Score vs Social Support in Different Regions
 
 ```{r SS-ord, echo = FALSE, out.width='80%', fig.height = 4.5}
 SS_mean <- WHR20 %>% 
@@ -108,6 +122,9 @@ SS_mean <- WHR20 %>%
     kable() %>%
       kable_styling(bootstrap_options = c("striped", "hover"))
 ```
+
+- We nearly found no country has low Social Support score but got high Ladder Score. 
+
 
 ---
 
@@ -155,7 +172,7 @@ SS_mean <- WHR20 %>%
 
 ---
 
-## Healthy Life Expectancy
+## Ladder Score vs Healthy Life Expectancy in Different Regions
 
 ```{r HLE-ord, echo = FALSE}
 HLE_mean <- WHR20 %>% 
