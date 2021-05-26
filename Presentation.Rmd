@@ -387,27 +387,23 @@ knitr::include_graphics("figs/janie_img_04.jpeg")
 class: left, top
 # Grouping
 
-```{r ,include=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(gt)
 free_avg <- WHR20 %>%
   group_by(`Regional indicator`) %>% 
-  summarise(average = mean(`Freedom to make life choices`)) %>% 
-  arrange(desc(average))
+  summarise(Average = mean(`Freedom to make life choices`)) %>% 
+  arrange(desc(Average))
+
+free_avg %>% 
+      gt()
 ```
 
-```{r, message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
-knitr::kable(free_avg, caption = "Average Freedom to Make Life Choices Score by Region",
-      col.names = c("Region", "Average Score")) %>% 
-  kable_styling(c("hover", 
-                  "condensed",
-                  position = "center", 
-                  fixed_thead = TRUE))
-```
 
 ---
 class: left, top
 # High Group
 
-```{r freeh, fig.cap="The Group of High Freedom to Make Life Choices Score", fig.width=10, message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
+```{r freeh, fig.cap="The Group of High Freedom to Make Life Choices Score", fig.width=10, message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE, fig.position = "center"}
  WHR20 %>%
   filter(`Regional indicator` %in% c("Southeast Asia",  "North America and ANZ", "Western Europe", "Latin America and Caribbean")) %>% 
   ggplot(aes(x = `Ladder score`, 
@@ -455,14 +451,13 @@ class: left, top
 ```
 
 ---
-class: left, top
+class: left, middle
 # Is Freedom to Make Life Choices related to happiness?
 
 Except Southeast Asia, and Middle East and North Africa,
 
-.content-box-soft[ 
 the ladder score **is related to** the “Freedom to make life choices” score in most of the regions.
-]
+
 
 ---
 class: center, middle
@@ -534,12 +529,11 @@ class: left, top
 
 
 ---
-class: left, top
+class: left, middle
 # Is Generosity related to happiness?
 
-.content-box-soft[ 
+
 In general, the generosity score does **not** show a relationship with the ladder score.
-]
 
 
 ---
@@ -631,14 +625,15 @@ class: left, top
 
 
 ---
-class: left, top
+class: left, middle
+
 # Is Perceptions of corruption related to happiness?
 
-.content-box-soft[ 
+
 - The lowest and the highest four regions all have a high ladder score. 
 
 - Most of the regions in the middle score groups show the middle ladder score.
-]
+
 
 ---
 class: center, middle
