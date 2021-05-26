@@ -519,7 +519,7 @@ class: left, top
 class: left, top
 # Group less than 0
 
-```{r genel, fig.cap="The Group of the Generosity Score Higher Than 0", fig.width=10, message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
+```{r genel, fig.cap="The Group of the Generosity Score Higher Than 0", fig.width=12, message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
  WHR20 %>%
   filter(`Regional indicator` %in% c("Commonwealth of Independent States","East Asia","Latin America and Caribbean","Middle East and North Africa","Central and Eastern Europe")) %>% 
   ggplot(aes(x = `Ladder score`, 
