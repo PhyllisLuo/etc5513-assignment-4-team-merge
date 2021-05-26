@@ -490,11 +490,7 @@ gene_avg  <- WHR20 %>%
 
 ```{r tabgene, message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
 knitr::kable(gene_avg, caption = "The Average Generosity Score by Region",
-                col.names = c("Region", "Average Score")) %>% 
-  kable_styling(c("hover", 
-                  "condensed",
-                  position = "center", 
-                  fixed_thead = TRUE))
+                col.names = c("Region", "Average Score"), "pipe") 
 ```
 
 ---
@@ -662,7 +658,7 @@ data.table(comparison,
             htmltools::tags$caption(
               style = 'caption-side: bottom; text-align: center;', 
               htmltools::em('Data table that only includes top5, middle5 and worst5 countries'))
-          )
+          ) %>% kable()
 ```
 
 ```{r include=FALSE}
