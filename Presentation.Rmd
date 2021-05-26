@@ -168,7 +168,7 @@ WHR20 %>%
 class: center, middle
 ### Ladder Score vs Logged GDP for the Low GDP Regions
 
-```{r GDP-low, echo = FALSE, fig.align="center", out.width='80%', fig.height = 4.5}
+```{r GDP-low, echo = FALSE, fig.align="center", out.width='80%', fig.height = 2}
  WHR20 %>%
   filter(`Regional indicator` %in% 
            c("Commonwealth of Independent States",
@@ -187,6 +187,8 @@ class: center, middle
 ```
 
 ---
+
+### Short Summary
 
 **In High GDP Regions:**
 
@@ -258,7 +260,7 @@ class: center, middle
 class: center, middle
 ### Ladder Score vs Social Support for the Low Social Support Regions
 
-```{r SS-low, echo = FALSE, , fig.align="center", out.width='80%', fig.height = 4.5}
+```{r SS-low, echo = FALSE, , fig.align="center", out.width='80%', fig.height = 2}
  WHR20 %>%
   filter(`Regional indicator` %in% 
            c("Middle East and North Africa",
@@ -277,6 +279,8 @@ class: center, middle
 ```
 
 ---
+
+### Short Summary
 
 - We nearly found no country has low Social Support score but got high Ladder Score. 
 
@@ -359,6 +363,8 @@ class: center, middle
 
 ---
 
+### Short Summary
+
 **In High Healthy Life Expectancy Score Regions:**
 
 - In the high Healthy Life Expectancy score countries group, it shows a positive correlation in Southeast Asia, Middle East and North Africa and North America and ANZ. 
@@ -391,14 +397,11 @@ free_avg <- WHR20 %>%
   group_by(`Regional indicator`) %>% 
   summarise(Average = mean(`Freedom to make life choices`)) %>% 
   arrange(desc(Average))
+```
 
-<<<<<<< HEAD
-```{r, message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
-free_avg%>% 
-=======
-free_avg %>% 
->>>>>>> 0c6dee23db4fe26813712234411ec7bd5718291a
-      gt()
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+free_avg%>% gt()
 ```
 
 
@@ -703,6 +706,8 @@ class: left, top
 #Conclusion
 
 * This analysis illustrated that the world’s happiest countries are primarily in Western Europe, North America, and Australia & New Zealand.
+
+* It basically shows a positive correlation between **GDP**, **Social Support**, **Healthy Life Expectancy** and ladder score, while it depends on different regions, it's not a gold rule.
 
 * **Freedom to make life choices** is related to ladder score.
 
