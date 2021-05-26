@@ -129,7 +129,8 @@ knitr::include_graphics("figs/GDP.png")
 class: center, middle
 # Ladder Score vs Logged GDP per capita in Different Regions
 
-```{r GDP-ord, echo = FALSE, out.width='80%', fig.height =6.5}
+```{r GDP-ord, echo = FALSE, out.width='80%', fig.height =6.5, warning=FALSE, message=FALSE}
+library(gt)
 gdp_mean <- WHR20 %>% 
   group_by(`Regional indicator`) %>% 
   summarise(Average 
@@ -137,8 +138,7 @@ gdp_mean <- WHR20 %>%
   arrange(-Average)
 
   gdp_mean %>% 
-    kable() %>%
-      kable_styling()
+    gt()
 ```
 
 ---
@@ -220,7 +220,7 @@ knitr::include_graphics("figs/SS.png")
 class: center, middle
 ## Ladder Score vs Social Support in Different Regions
 
-```{r SS-ord, echo = FALSE, out.width='80%', fig.height = 4.5}
+```{r SS-ord, echo = FALSE, out.width='80%', fig.height = 4.5, warning=FALSE, message=FALSE}
 SS_mean <- WHR20 %>% 
   group_by(`Regional indicator`) %>% 
   summarise(Average 
@@ -228,8 +228,7 @@ SS_mean <- WHR20 %>%
   arrange(-Average)
 
   SS_mean %>% 
-    kable() %>%
-      kable_styling()
+    gt()
 ```
 
 
@@ -305,7 +304,7 @@ knitr::include_graphics("figs/HLE.png")
 class: center, middle
 ## Ladder Score vs Healthy Life Expectancy in Different Regions
 
-```{r HLE-ord, echo = FALSE}
+```{r HLE-ord, echo = FALSE, warning=FALSE, message=FALSE}
 HLE_mean <- WHR20 %>% 
   group_by(`Regional indicator`) %>% 
   summarise(Average 
@@ -313,8 +312,7 @@ HLE_mean <- WHR20 %>%
   arrange(-Average)
 
   HLE_mean %>% 
-    kable() %>%
-      kable_styling()
+      gt()
 ```
 
 ---
@@ -395,12 +393,8 @@ free_avg <- WHR20 %>%
 ```
 
 ```{r, message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
-knitr::kable(free_avg, caption = "Average Freedom to Make Life Choices Score by Region",
-      col.names = c("Region", "Average Score")) %>% 
-  kable_styling(c("hover", 
-                  "condensed",
-                  position = "center", 
-                  fixed_thead = TRUE))
+free_avg%>% 
+      gt()
 ```
 
 ---
@@ -489,12 +483,7 @@ gene_avg  <- WHR20 %>%
 ```
 
 ```{r tabgene, message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
-knitr::kable(gene_avg, caption = "The Average Generosity Score by Region",
-                col.names = c("Region", "Average Score")) %>% 
-  kable_styling(c("hover", 
-                  "condensed",
-                  position = "center", 
-                  fixed_thead = TRUE))
+gene_avg %>% gt()
 ```
 
 ---
@@ -570,12 +559,7 @@ perc_avg  <- WHR20 %>%
 
 
 ```{r tabcor, message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
-knitr::kable(perc_avg, caption = "The Perceptions of Corruption Score by Region",
-                col.names = c("Region", "Average Score")) %>% 
-  kable_styling(c("hover", 
-                  "condensed",
-                  position = "center", 
-                  fixed_thead = TRUE))
+perc_avg %>% gt()
 ```
 
 ---
