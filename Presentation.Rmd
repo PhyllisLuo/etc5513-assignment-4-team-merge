@@ -129,7 +129,8 @@ knitr::include_graphics("figs/GDP.png")
 class: center, middle
 # Ladder Score vs Logged GDP per capita in Different Regions
 
-```{r GDP-ord, echo = FALSE, out.width='80%', fig.height =6.5}
+```{r GDP-ord, echo = FALSE, out.width='80%', fig.height =6.5, warning=FALSE, message=FALSE}
+library(gt)
 gdp_mean <- WHR20 %>% 
   group_by(`Regional indicator`) %>% 
   summarise(Average 
@@ -137,8 +138,7 @@ gdp_mean <- WHR20 %>%
   arrange(-Average)
 
   gdp_mean %>% 
-    kable() %>%
-      kable_styling(bootstrap_options = c("striped", "hover"))
+    gt()
 ```
 
 ---
@@ -168,7 +168,7 @@ WHR20 %>%
 class: center, middle
 ### Ladder Score vs Logged GDP for the Low GDP Regions
 
-```{r GDP-low, echo = FALSE, fig.align="center", out.width='80%', fig.height = 4.5}
+```{r GDP-low, echo = FALSE, fig.align="center", out.width='80%', fig.height = 2}
  WHR20 %>%
   filter(`Regional indicator` %in% 
            c("Commonwealth of Independent States",
@@ -187,6 +187,8 @@ class: center, middle
 ```
 
 ---
+
+### Short Summary
 
 **In High GDP Regions:**
 
@@ -220,7 +222,7 @@ knitr::include_graphics("figs/SS.png")
 class: center, middle
 ## Ladder Score vs Social Support in Different Regions
 
-```{r SS-ord, echo = FALSE, out.width='80%', fig.height = 4.5}
+```{r SS-ord, echo = FALSE, out.width='80%', fig.height = 4.5, warning=FALSE, message=FALSE}
 SS_mean <- WHR20 %>% 
   group_by(`Regional indicator`) %>% 
   summarise(Average 
@@ -228,8 +230,7 @@ SS_mean <- WHR20 %>%
   arrange(-Average)
 
   SS_mean %>% 
-    kable() %>%
-      kable_styling(bootstrap_options = c("striped", "hover"))
+    gt()
 ```
 
 
@@ -259,7 +260,7 @@ class: center, middle
 class: center, middle
 ### Ladder Score vs Social Support for the Low Social Support Regions
 
-```{r SS-low, echo = FALSE, , fig.align="center", out.width='80%', fig.height = 4.5}
+```{r SS-low, echo = FALSE, , fig.align="center", out.width='80%', fig.height = 2}
  WHR20 %>%
   filter(`Regional indicator` %in% 
            c("Middle East and North Africa",
@@ -278,6 +279,8 @@ class: center, middle
 ```
 
 ---
+
+### Short Summary
 
 - We nearly found no country has low Social Support score but got high Ladder Score. 
 
@@ -305,7 +308,7 @@ knitr::include_graphics("figs/HLE.png")
 class: center, middle
 ## Ladder Score vs Healthy Life Expectancy in Different Regions
 
-```{r HLE-ord, echo = FALSE}
+```{r HLE-ord, echo = FALSE, warning=FALSE, message=FALSE}
 HLE_mean <- WHR20 %>% 
   group_by(`Regional indicator`) %>% 
   summarise(Average 
@@ -313,8 +316,7 @@ HLE_mean <- WHR20 %>%
   arrange(-Average)
 
   HLE_mean %>% 
-    kable() %>%
-      kable_styling(bootstrap_options = c("striped", "hover"))
+      gt()
 ```
 
 ---
@@ -361,6 +363,8 @@ class: center, middle
 
 ---
 
+### Short Summary
+
 **In High Healthy Life Expectancy Score Regions:**
 
 - In the high Healthy Life Expectancy score countries group, it shows a positive correlation in Southeast Asia, Middle East and North Africa and North America and ANZ. 
@@ -387,27 +391,25 @@ knitr::include_graphics("figs/janie_img_04.jpeg")
 class: left, top
 # Grouping
 
-```{r ,include=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(gt)
 free_avg <- WHR20 %>%
   group_by(`Regional indicator`) %>% 
-  summarise(average = mean(`Freedom to make life choices`)) %>% 
-  arrange(desc(average))
+  summarise(Average = mean(`Freedom to make life choices`)) %>% 
+  arrange(desc(Average))
 ```
 
-```{r, message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
-knitr::kable(free_avg, caption = "Average Freedom to Make Life Choices Score by Region",
-      col.names = c("Region", "Average Score")) %>% 
-  kable_styling(c("hover", 
-                  "condensed",
-                  position = "center", 
-                  fixed_thead = TRUE))
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+free_avg%>% gt()
 ```
+
 
 ---
 class: left, top
 # High Group
 
-```{r freeh, fig.cap="The Group of High Freedom to Make Life Choices Score", fig.width=10, message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
+```{r freeh, fig.cap="The Group of High Freedom to Make Life Choices Score", fig.width=10, message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE, fig.position = "center"}
  WHR20 %>%
   filter(`Regional indicator` %in% c("Southeast Asia",  "North America and ANZ", "Western Europe", "Latin America and Caribbean")) %>% 
   ggplot(aes(x = `Ladder score`, 
@@ -455,14 +457,13 @@ class: left, top
 ```
 
 ---
-class: left, top
+class: left, middle
 # Is Freedom to Make Life Choices related to happiness?
 
 Except Southeast Asia, and Middle East and North Africa,
 
-.content-box-soft[ 
 the ladder score **is related to** the “Freedom to make life choices” score in most of the regions.
-]
+
 
 ---
 class: center, middle
@@ -489,8 +490,7 @@ gene_avg  <- WHR20 %>%
 ```
 
 ```{r tabgene, message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
-knitr::kable(gene_avg, caption = "The Average Generosity Score by Region",
-                col.names = c("Region", "Average Score"), "pipe") 
+gene_avg %>% gt()
 ```
 
 ---
@@ -515,7 +515,7 @@ class: left, top
 class: left, top
 # Group less than 0
 
-```{r genel, fig.cap="The Group of the Generosity Score Higher Than 0", fig.width=10, message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
+```{r genel, fig.cap="The Group of the Generosity Score Higher Than 0", fig.width=12, message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
  WHR20 %>%
   filter(`Regional indicator` %in% c("Commonwealth of Independent States","East Asia","Latin America and Caribbean","Middle East and North Africa","Central and Eastern Europe")) %>% 
   ggplot(aes(x = `Ladder score`, 
@@ -530,12 +530,11 @@ class: left, top
 
 
 ---
-class: left, top
+class: left, middle
 # Is Generosity related to happiness?
 
-.content-box-soft[ 
+
 In general, the generosity score does **not** show a relationship with the ladder score.
-]
 
 
 ---
@@ -566,12 +565,7 @@ perc_avg  <- WHR20 %>%
 
 
 ```{r tabcor, message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
-knitr::kable(perc_avg, caption = "The Perceptions of Corruption Score by Region",
-                col.names = c("Region", "Average Score")) %>% 
-  kable_styling(c("hover", 
-                  "condensed",
-                  position = "center", 
-                  fixed_thead = TRUE))
+perc_avg %>% gt()
 ```
 
 ---
@@ -627,14 +621,15 @@ class: left, top
 
 
 ---
-class: left, top
+class: left, middle
+
 # Is Perceptions of corruption related to happiness?
 
-.content-box-soft[ 
+
 - The lowest and the highest four regions all have a high ladder score. 
 
 - Most of the regions in the middle score groups show the middle ladder score.
-]
+
 
 ---
 class: center, middle
@@ -658,7 +653,7 @@ data.table(comparison,
             htmltools::tags$caption(
               style = 'caption-side: bottom; text-align: center;', 
               htmltools::em('Data table that only includes top5, middle5 and worst5 countries'))
-          ) %>% kable()
+          )
 ```
 
 ```{r include=FALSE}
@@ -711,6 +706,8 @@ class: left, top
 #Conclusion
 
 * This analysis illustrated that the world’s happiest countries are primarily in Western Europe, North America, and Australia & New Zealand.
+
+* It basically shows a positive correlation between **GDP**, **Social Support**, **Healthy Life Expectancy** and ladder score, while it depends on different regions, it's not a gold rule.
 
 * **Freedom to make life choices** is related to ladder score.
 
