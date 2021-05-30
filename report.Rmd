@@ -344,6 +344,8 @@ summary(lm)
 
 \subsection*{2.4 Freedom to make life choices }
 
+*This subsection is created by Yunqi Chen.*
+
 **Freedom to make life choices** is the national average of binary responses to the GWP question, “Are you satisfied or dissatisfied with your freedom to choose what you do with your life?” @WHReport.
 
 ```{r, include=FALSE}
@@ -363,7 +365,7 @@ knitr::kable(free_avg, caption = "The Average Freedom to Make Life Choices Score
                   fixed_thead = TRUE))
 ```
 
-The above table \@ref:(tab:tabfree) is the average "freedom to make life choices" score among all the regions. We divided them into three groups by the average score greater than 0.80, 0.75-0.80, and lower than 0.75.
+The above table \@ref:(tab:tabfree) is the average "freedom to make life choices" score among all the regions. It is divided into three groups by the average score greater than 0.80, 0.75-0.80, and lower than 0.75.
 
 ```{r freeh, fig.cap="The Group of High Freedom to Make Life Choices Score", fig.width=10}
  WHR20 %>%
@@ -378,7 +380,7 @@ The above table \@ref:(tab:tabfree) is the average "freedom to make life choices
              linetype = "dashed") 
 ```
 
-As the figure \@ref(fig:freeh) above, in the group of the "Freedom to make life choices" score is higher than 0.80 the ladder scores in Latin America and Caribbean, North America and ANZ, Western Europe are comparably high as well. Specifically, most of the points in these three rigions are on the right of the average line. However, in Southeast Asia, the points surrounding the average line represent the ladder scores are not as high as the others.
+As the figure \@ref(fig:freeh) above, in the group of scores higher than 8.0, except Southeast Asia, the ladder scores in the other three regions are higher than the average.
 
 ```{r freem, fig.cap="The Group of Middle Freedom to Make Life Choices Score", fig.width=10}
 WHR20 %>%
@@ -393,7 +395,7 @@ WHR20 %>%
              linetype = "dashed") 
 ```
 
-The above figure \@ref(fig:freem) is the group of regions with middle "Freedom to make life choices" score of 0.75-0.80.  The distribution of the points is generally surrounding the average line. However, in South Asia, most of the points are lower than the average.
+The above figure \@ref(fig:freem) is the group of scores of 0.75-0.80. The distribution of the points is generally surrounding the average line. However, in South Asia, most of the points are lower than the average.
 
 ```{r freel, fig.cap="The Group of Low Freedom to Make Life Choices Score"}
  WHR20 %>%
@@ -408,16 +410,18 @@ The above figure \@ref(fig:freem) is the group of regions with middle "Freedom t
              linetype = "dashed") 
 ```
 
-From the above figure \@ref(fig:freel), in the low "Freedom to make life choices" score, which is less than 0.75, a tremendous amount of the points of Sub-Saharan Africa are on the left of the average line. However, the points are scattered evenly from high to low in the Middle East and North Africa. 
+From the above figure \@ref(fig:freel), in the group of scores less than 0.75, a tremendous amount of the points of Sub-Saharan Africa are on the left of the average line. However, the points are scattered evenly from high to low in the Middle East and North Africa. 
 
-*In general, the ladder score is related to the "Freedom to make life choices" score in most of the regions, except Southeast Asia, and Middle East and North Africa.*
+**In general, the ladder score is related to the "Freedom to make life choices" score in most of the regions, except Southeast Asia, and Middle East and North Africa.**
 
 
 \subsection*{2.5 Generosity }
 
+*This subsection is created by Yunqi Chen.*
+
 Generosity is the residual of regressing the national average of GWP responses to the question, “Have you donated money to a charity in the past month?” on GDP per capita @WHReport.
 
-The table below \@ref:(tab:tabgene) is the average generosity score among all the regions. We divided them into two groups by the average score over and below 0.
+The table below \@ref:(tab:tabgene) is the average generosity score among all the regions. It is divided into two groups by the average score over and below 0.
 
 ```{r tabgene}
 gene_avg  <- WHR20 %>%
@@ -465,13 +469,15 @@ From the above figure \@ref(fig:geneh), in the group of the generosity score hig
 
 The above figure \@ref(fig:genel) indicates that in the group of the generosity score less than 0, except of Latin America and Caribbean, the ladder score distributed scattered around the average ladder score line.
 
-*In general, the generosity score does not show a relationship with the ladder score.*
+**In general, the generosity score does not show a relationship with the ladder score.**
 
 \subsection*{2.6 Perceptions of corruption }
 
+*This subsection is created by Yunqi Chen.*
+
 Perceptions of corruption are the average of binary answers to two GWP questions: “Is corruption widespread throughout the government or not?” and “Is corruption widespread within businesses or not?” Where data for government corruption are missing, the perception of business corruption is used as the overall corruption-perception measure @WHReport. 
 
-The table below \@ref:(tab:tabcor) is the average "perceptions of corruption" score among all the regions. We divided them into three groups by the average score greater than 0.75, 0.70-0.75, lower than 0.70. 
+The table below \@ref:(tab:tabcor) is the average "perceptions of corruption" score among all the regions. It is divided into three groups by the average score greater than 0.75, 0.70-0.75, lower than 0.70. 
 
 ```{r tabcor}
 perc_avg  <- WHR20 %>%
@@ -501,7 +507,7 @@ knitr::kable(perc_avg, caption = "The Perceptions of Corruption Score by Region"
              linetype = "dashed") 
 ```
 
-From the figure \@ref(fig:corl), in the group of low "perceptions of corruption" scores with less than 0.70, surprisingly, all the points are at the right of the average ladder score line. This means that if the region has low "perceptions of corruption" scores, the ladder score would be high.
+From the figure \@ref(fig:corl), in the group of scores less than 0.70, not surprisingly, all the points are on the right of the average ladder score line. 
 
 ```{r corm, fig.cap="The Group of Middle Perceptions of Corruption Score", fig.width=15}
  WHR20 %>%
@@ -516,7 +522,7 @@ From the figure \@ref(fig:corl), in the group of low "perceptions of corruption"
              linetype = "dashed") 
 ```
 
-From the figure \@ref(fig:corm), in the group of middle "perceptions of corruption" scores with between 0.70 and 0.80, except South Asia and Sub-Saharan Africa shows lower ladder score, the other regions all indicate a middle ladder score.
+From the figure \@ref(fig:corm), in the group of scores with between 0.70 and 0.80, except South Asia and Sub-Saharan Africa shows lower ladder score, the other regions all indicate a middle ladder score.
 
 ```{r corh, fig.cap="The Group of High Perceptions of Corruption Score"}
  WHR20 %>%
@@ -531,9 +537,9 @@ From the figure \@ref(fig:corm), in the group of middle "perceptions of corrupti
              linetype = "dashed") 
 ```
 
-The above figure \@ref(fig:corh) is the group of regions with high "perceptions of corruption" scores greater than 0.80. In Central and Eastern Europe, and Latin America and Caribbean, most of the points are on the right of the average line. This means, the region with high "perceptions of corruption" scores could lead to a comparably high ladder score.
+The above figure \@ref(fig:corh) is the group of scores greater than 0.80. In Central and Eastern Europe, and Latin America and Caribbean, most of the points are on the right of the average line.
 
-*In conclusion, as for the "perceptions of corruption" score, the lowest and the highest four regions all have a high ladder score. Most of the regions in the middle score groups show the middle ladder score.*
+**In conclusion, as for the "perceptions of corruption" score, the lowest and the highest four regions all have a high ladder score. Most of the regions in the middle score groups show the middle ladder score.**
 
 \clearpage
 \section*{3 }
