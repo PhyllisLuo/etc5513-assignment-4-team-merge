@@ -1,0 +1,2 @@
+"0","knitr::kable(gene_avg, caption = ""The Average Generosity Score by Region"","
+"0","                col.names = c(""Region"", ""Average Score""), ""pipe"") "
