@@ -72,19 +72,36 @@ WHR20 <- read_excel("Data/WHR20_DataForFigure2.1.xls")
 
 \section*{Introduction}
 
-\section*{1 }
+### Did you know countries are ranked each year based on a Happiness Index?
 
-```{r}
+* Countries are ranked each year based on a **Happiness Index**. This index rates the happiness of countries on a scale from 0 to 10. Happiness index is also called the ladder score or the happiness score. <br>
+
+* We have added a column for happiness rank. Happiness rank is given with respect to ladder score. The more the ladder score the higher the rank
+
+
+\section*{1 Happiness Score by Region}
+
+We have collected happiness data from World Happiness Report for 2020. It has global happiness that ranks 156 countries by how happy their citizens perceive themselves to be.
+
+We grouped the countries into different regions in the world to observe which region is the happiest.
+
+From the box plot \@ref(fig:region) we see that the happiness scores are quite different among these regions.
+
+The group determined that the **“happiest”** countries were located in **Western Europe**, particularly Finland and Denmark.
+
+Meanwhile the **“least happiest”** countries were located in **Sub-Saharan Africa** and **South Asia**. 
+
+
+```{r include=FALSE}
 happiness <- WHR20 %>% 
   select(`Country name`,`Regional indicator`,`Ladder score`,`Logged GDP per capita`,`Social support`,`Healthy life expectancy`,`Freedom to make life choices`,Generosity,`Perceptions of corruption`) %>% 
   mutate(`Happiness Rank` = rank(-`Ladder score`)) %>% 
   rename(`Happiness Score` = `Ladder score`) %>% clean_names()
 
-#happiness rank : the more the ladder score the higher the rank              
 
 ```
 
-```{r regiontable}
+```{r regiontable, include=FALSE}
 reg_avg <- happiness %>%
   select(regional_indicator,happiness_score) %>%
   group_by(regional_indicator) %>%
@@ -93,7 +110,7 @@ reg_avg <- happiness %>%
 
 ```
 
-```{r}
+```{r countrycode, include=FALSE}
 happiness$iso3 <- countrycode(happiness$country_name, 'country.name', 'iso3c')
 
 happiness[happiness$country_name=="Kosovo","iso3"] <- "XKX"
@@ -101,7 +118,7 @@ happiness[happiness$country_name=="Kosovo","iso3"] <- "XKX"
 
 ```
 
-```{r region , fig.cap = "Happiness Score by Region", fig.align='center',fig.height=5,fig.width=8}
+```{r region, fig.cap = "Happiness Score by Region", fig.align='center',fig.height=5,fig.width=8}
 plot_ly(happiness, x=~regional_indicator,
               y=~happiness_score,
               type="box",
@@ -118,20 +135,11 @@ plot_ly(happiness, x=~regional_indicator,
 ```
 
 
-*Happiness Score by Region*
-
-We have collected happiness data from World Happiness Report for 2020. It has global happiness that ranks 156 countries by how happy their citizens perceive themselves to be.
-
-We grouped the countries into different regions in the world to observe which region is the happiest.
-
-From the box plot \@ref(fig:region) we see that the happiness scores are quite different among these regions.
-
-The group determined that the **“happiest”** countries were located in **Western Europe**, particularly Finland and Denmark.
-
-Meanwhile the **“least happiest”** countries were located in **Sub-Saharan Africa** and **South Asia**. 
 
 
-\subsection*{1.2 }
+
+
+
 
 
 \clearpage
@@ -542,11 +550,13 @@ The above figure \@ref(fig:corh) is the group of scores greater than 0.80. In Ce
 **In conclusion, as for the "perceptions of corruption" score, the lowest and the highest four regions all have a high ladder score. Most of the regions in the middle score groups show the middle ladder score.**
 
 \clearpage
-\section*{3 }
+\section*{3 Happiness score in differetent countries }
 
-\subsection*{3.1 }
+* In the above sections we have seen factors that are reflect happiness score in different regions.
+* In the this section we will look happiness score with respect to countries countries.
 
-* Compare Top5, Middle5 and Worst5 Countries
+\subsection*{3.1 Compare Top5, Middle5 and Worst5 Countries }
+
 
 ```{r include=FALSE}
 top5 <- happiness %>% head(5) %>% mutate(Level = "TOP5")
@@ -588,21 +598,15 @@ comparison.score %>%
 
 ```
 
-* Analyzing data of Global Happiness Levels in the world,we were able to discover the impact of each different factor in determining “happiness.”
-* Factors to determine happiness score of a country are GDP, Freedom to make choices, how less is the corruption, generosity, heath and social support.
-* To understand the relations between factors and happiness score we have take data for the top, median and bottom five countries according to ranked scores in the above figure \@ref(fig:compare).
-* We observe that the countries with highest happiness score have a better GDP, less corruption, more freedom to make choices, good health ratio, more generosity and receive social support. 
+* In the above figure \@ref(fig:compare), we have taken the top 5, middle 5 and the bottom 5 countries to understand the relations between 6 factors and happiness score. 
+* Country with higher happiness score have higher GDP. Happiest countries tend to be those with strong and stable economies.
+* Health is particular important because it directly affects individuals in countries.
+* We observe that the countries with highest happiness score have a better GDP, less corruption, more freedom to make choices, good health ratio, more generosity and receive social support.
+ 
 
 
-\subsection*{3.2 }
+\subsection*{3.2 Happiness Score for Countries }
 
-**Happiness Score for Countries**
-
-The WHR calculates how much of the Happiness Index can be explained by the key factors. Add them all up and you should get close to the actual number. <br>
-
-From the below map \@ref(fig:map) you can easily spot the happiest country, Finland. <br>
-Finland is ranked 1st according to the happiness score it has. It is said one of the reason why Finnish people are so happy is that they do not have to deal with corruption and black money. <br>
-Countries such as Afghanistan and South Sudan have least happiness score.
 
 ```{r map, fig.cap= "World Happiness Map", fig.width=8}
 
@@ -619,6 +623,14 @@ fig
 ```
 
 
+
+The World Happiness report calculates how much of the Happiness Index can be explained by the key factors. Add them all up and you should get close to the actual number. <br>
+
+From the below map \@ref(fig:map) you can easily spot the happiest country, Finland. <br>
+
+Finland is ranked 1st according to the happiness score it has. It is said one of the reason why Finnish people are so happy is that they do not have to deal with corruption and black money. <br>
+
+Countries such as Afghanistan and South Sudan have least happiness score, one one the possible reasons could be the wars happening there.
 
 
 \clearpage
