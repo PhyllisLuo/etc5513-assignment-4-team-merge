@@ -5,8 +5,8 @@ author:
   othernames: Yu
   address: Monash University
   email: yluo0065@student.monash.com
-  correspondingauthor: true
-  qualifications:  Master
+  correspondingauthor: yes
+  qualifications: Master
 - familyname: Thakker
   othernames: Khushee
   address: Monash University
@@ -16,13 +16,13 @@ author:
   othernames: Yunqi
   address: Monash University
   email: yche0454@student.monash.edu
-  correspondingauthor: true
-  qualifications:  Master
+  correspondingauthor: yes
+  qualifications: Master
 organization: the World Happiness Report
-bibliography: references.bib
-biblio-style: authoryear-comp
-linestretch: 1.5
 output:
+  html_document:
+    toc: no
+    df_print: paged
   bookdown::pdf_document2:
     template: monashreport2.tex
     fig_caption: yes
@@ -33,8 +33,11 @@ output:
     keep_tex: yes
     number_sections: yes
     citation_package: biblatex
-    toc: false
-editor_options: 
+    toc: no
+biblio-style: authoryear-comp
+linestretch: 1.5
+bibliography: references.bib
+editor_options:
   chunk_output_type: console
 ---
 
