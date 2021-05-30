@@ -391,39 +391,17 @@ knitr::include_graphics("figs/janie_img_04.jpeg")
 class: left, top
 # Grouping
 
-```{r, include = FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 library(gt)
 free_avg <- WHR20 %>%
   group_by(`Regional indicator`) %>% 
   summarise(Average = mean(`Freedom to make life choices`)) %>% 
   arrange(desc(Average))
 ```
-<<<<<<< HEAD
-
-
-<<<<<<< HEAD
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-knitr::kable(free_avg, caption = "The Average Generosity Score by Region",
-                col.names = c("Region", "Average Score")) %>% 
-  kable_styling(c("hover", 
-                  "condensed",
-                  position = "center", 
-                  fixed_thead = TRUE))
-=======
-<<<<<<< HEAD
-```{r, message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, message=FALSE}
-free_avg%>% 
-=======
-free_avg %>% 
->>>>>>> 0c6dee23db4fe26813712234411ec7bd5718291a
-      gt()
->>>>>>> main
-=======
 
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 free_avg%>% gt()
->>>>>>> main
 ```
 
 
