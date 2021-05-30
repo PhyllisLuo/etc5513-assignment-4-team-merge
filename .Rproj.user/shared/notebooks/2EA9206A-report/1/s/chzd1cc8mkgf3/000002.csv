@@ -1,0 +1,6 @@
+"0","reg_avg <- happiness %>%"
+"0","  select(regional_indicator,happiness_score) %>%"
+"0","  group_by(regional_indicator) %>%"
+"0","  summarize(Average = mean(happiness_score)) %>% "
+"0","  arrange(-Average)"
+"0",""

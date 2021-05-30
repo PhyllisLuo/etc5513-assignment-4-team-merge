@@ -1,0 +1,3 @@
+"0","comparison.score %>% "
+"0","  ggplot(aes(x = Level, y = score, colour = Level, fill = Level)) + "
+"0","  geom_boxplot(position=position_dodge(width=1)) + facet_wrap(~columns, scales = ""free"") "

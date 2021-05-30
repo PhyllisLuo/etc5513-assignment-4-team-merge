@@ -1,0 +1,2 @@
+"0","# Read the data"
+"0","WHR20 <- read_excel(""Data/WHR20_DataForFigure2.1.xls"")"

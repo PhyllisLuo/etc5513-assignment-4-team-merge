@@ -1,0 +1,8 @@
+"0","top5 <- happiness %>% head(5) %>% mutate(Level = ""TOP5"")"
+"0","middle5 <- happiness[76:80, ] %>% mutate(Level = ""MIDDLE5"")"
+"0","worst5 <- happiness %>% tail(5) %>% mutate(Level = ""WORST5"")"
+"0",""
+"0","comparison <- bind_rows(top5, middle5, worst5)"
+"0",""
+"0","comparison$Level <- as.factor(comparison$Level)"
+"0","comparison <- transform(comparison, Level = factor(Level, levels = c(""TOP5"", ""MIDDLE5"", ""WORST5"" )))"

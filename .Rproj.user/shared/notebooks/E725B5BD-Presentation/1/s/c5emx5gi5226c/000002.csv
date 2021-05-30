@@ -1,0 +1,5 @@
+"0","happiness <- WHR20 %>% "
+"0","  select(`Country name`,`Regional indicator`,`Ladder score`,`Logged GDP per capita`,`Social support`,`Healthy life expectancy`,`Freedom to make life choices`,Generosity,`Perceptions of corruption`) %>% "
+"0","  mutate(`Happiness Rank` = rank(-`Ladder score`)) %>% "
+"0","  rename(`Happiness Score` = `Ladder score`) %>% clean_names()"
+"0","#happiness rank : the more the ladder score the higher the rank              "

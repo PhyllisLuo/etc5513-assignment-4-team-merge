@@ -1,0 +1,6 @@
+"0"," WHR20 %>%"
+"0","  filter(`Regional indicator` %in% c(""Sub-Saharan Africa"", ""Middle East and North Africa"")) %>% "
+"0","  ggplot(aes(x = `Ladder score`, "
+"0","               y = `Freedom to make life choices`)) +"
+"0","  geom_point() +"
+"0","  facet_wrap(~`Regional indicator`, nrow = 1)"

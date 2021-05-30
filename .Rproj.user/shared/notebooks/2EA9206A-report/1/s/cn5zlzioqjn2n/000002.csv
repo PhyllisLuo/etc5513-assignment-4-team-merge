@@ -1,0 +1,3 @@
+"0","comparison.score <- comparison %>% rename(""Economy GDP"" = ""logged_gdp_per_capita"" , ""Social Support"" = ""social_support"" , ""Health"" = ""healthy_life_expectancy"", ""Freedom"" = ""freedom_to_make_life_choices"", ""Corruption"" =""perceptions_of_corruption"") %>% "
+"0","  gather(key = ""columns"", value = ""score"", happiness_score:Corruption)"
+"0",""

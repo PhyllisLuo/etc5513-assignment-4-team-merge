@@ -1,0 +1,4 @@
+"0","happiness$iso3 <- countrycode(happiness$country_name, 'country.name', 'iso3c')"
+"2","Some values were not matched unambiguously: Kosovo
+"
+"0","happiness[happiness$country_name==""Kosovo"",""iso3""] <- ""XKX"""
