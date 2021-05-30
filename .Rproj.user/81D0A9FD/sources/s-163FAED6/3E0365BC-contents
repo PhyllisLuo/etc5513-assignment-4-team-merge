@@ -1,0 +1,265 @@
+---
+title: "Analysis on World Happiness"
+subtitle: ETC5513 Assignment 4
+author: Yu Luo, Thakker Khushee, Yunqi Chen
+output:
+  bookdown::html_document2
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, 
+                      cache=FALSE, 
+                      message=FALSE, 
+                      warning=FALSE,
+                      fig.width = 6, 
+                      fig.height = 4,
+                      fig.align="center")
+
+# Libraries
+library(tidyverse)
+library(readxl)
+library(kableExtra)
+library(bookdown)
+library(ggplot2)
+library(plotly)
+library(data.table)
+library(stringr)      
+library(janitor)
+library(countrycode)
+
+# Read the data
+WHR20 <- read_excel("Data/WHR20_DataForFigure2.1.xls")
+```
+
+
+## GDP
+
+Table \@ref(tab:GDP-ord) shows the average Logged GDP per capita of Regions from high to low. The top 3 regions with the highest GDP are North America and ANZ, Western Europe and East Asia, their GDP is all higher than 10. 
+
+The average GDP for all the countries is `r mean(WHR20$"Logged GDP per capita")`, and we found three regions' average GDP are lower than this level: Sub-Saharan Africa, South Asia, Commonwealth of Independent States. We divided into two groups, the regions that regional average GDP higher than global, and regions with regional GDP lower than global, to see how is the relationship between the Logged GDP per capita and the Ladder Score of countries in these regions.
+
+```{r GDP-ord}
+gdp_mean <- WHR20 %>% 
+  group_by(`Regional indicator`) %>% 
+  summarise(Average 
+            = round(mean(`Logged GDP per capita`),2))%>%
+  arrange(-Average)
+
+  gdp_mean %>% 
+    kable(caption = "Average Logged GDP per capita of Regions from High to Low") %>%
+      kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+```{r GDP-dens, eval = FALSE}
+ggplot(WHR20, aes(x = `Logged GDP per capita`))+
+  geom_density()+
+  geom_vline(aes(xintercept =
+                   mean(`Logged GDP per capita`)),
+             linetype = "dashed")
+
+mean(WHR20$`Ladder score`)
+
+mean(WHR20$`Logged GDP per capita`)
+
+quantile(WHR20$`Logged GDP per capita`)
+```
+
+In Figure \@ref(fig:GDP-high), We found the countries in Western Europe and North America and ANZ, and most of the countries in East Asia and Central and Eastern Europe, have a higher score on either Ladder Score and GDP. In the Middle East and North Africa and South Asia, they are polarized, several countries are with high GDP and high Ladder Scores, several got low scores either on Ladder Score or GDP.
+
+While what we found interesting and different from other Region is in Latin America and Caribbean, some countries even their GDP is lower than the average level, their Ladder Score is high. On the contrary, some countries in the Middle East and North Africa, they got higher GDP score, however, their Ladder Scores are low.
+
+```{r GDP-high, fig.cap = "Ladder Score vs GDP for the Regions with Regional GDP Means Higher than Total Means"}
+ WHR20 %>%
+  filter(!`Regional indicator` %in% 
+           c("Commonwealth of Independent States",
+             "South Asia", 
+             "Sub-Saharan Africa")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+             y = `Logged GDP per capita`)) +
+  geom_point() +
+  geom_vline(aes(xintercept = 5.47324),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept =9.295706),
+             linetype = "dashed") +
+  facet_wrap(~`Regional indicator`, ncol = 3)
+```
+
+Below Figure \@ref(fig:GDP-low) shows the regions whose regional GDP scores are lower than the average GDP of all the countries, it indicates most countries in these regions, their Ladder Scores are also lower.
+
+```{r GDP-low, fig.height = 1.6, fig.cap = "Ladder Score vs GDP for the Regions with Regional GDP Means Lower than Total Means"}
+ WHR20 %>%
+  filter(`Regional indicator` %in% 
+           c("Commonwealth of Independent States",
+             "South Asia", 
+             "Sub-Saharan Africa")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+             y = `Logged GDP per capita`)) +
+  geom_point() +
+  geom_vline(aes(xintercept = 5.47324),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept =9.295706),
+             linetype = "dashed") +
+  facet_wrap(~`Regional indicator`, ncol = 3)
+```
+
+## Social Support
+
+The average Social Support of regions from high to low is shown in Table \@ref(tab:SS-ord).
+
+The same method as GDP, we calculated the average Social Support of all counties, it is `r mean(WHR20$"Social support")`. 
+
+```{r SS-ord}
+SS_mean <- WHR20 %>% 
+  group_by(`Regional indicator`) %>% 
+  summarise(Average 
+            = round(mean(`Social support`),2))%>%
+  arrange(-Average)
+
+  SS_mean %>% 
+    kable(caption = "Average Social Support of Regions from High to Low") %>%
+      kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+```{r SS-dens, eval = FALSE}
+ggplot(WHR20, aes(x = `Social support`))+
+  geom_density()+
+  geom_vline(aes(xintercept =
+                   mean(`Social support`)),
+             linetype = "dashed")
+
+mean(WHR20$`Social support`)
+
+quantile(WHR20$`Social support`)
+```
+
+Either the high Social Support group (shows in Figure \@ref(fig:SS-high)) or low Social Support group (Figure \@ref(fig:SS-low)), we nearly found no country has low Social Support score but got high Ladder Score. The relationship between Social Support and Ladder Score is close to a positive correlation. The better Social Support, the more possible it to get a better Ladder Score; on the opposite, as shown in Figure \@ref(fig:SS-low), the worse Social Support, the lower the Ladder Score. 
+
+But not all the high score Social Support countries also got high Ladder Scores. In Central and Eastern Europe, Commonwealth of Independent States, Middle East and North Africa, South Asia, and Sub-Saharan Africa, some countries with high Social Support scores got low Ladder Scores.
+
+```{r SS-high, fig.cap = "Ladder Score vs Social Support for the Regions with Regional Social Support Means Higher than Total Means"}
+ WHR20 %>%
+  filter(!`Regional indicator` %in% 
+           c("Middle East and North Africa",
+             "South Asia", 
+             "Sub-Saharan Africa")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+             y = `Social support`)) +
+  geom_point() +
+  geom_vline(aes(xintercept = 5.47324),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept = 0.8087211),
+             linetype = "dashed") +
+  facet_wrap(~`Regional indicator`, ncol = 3)
+```
+
+```{r SS-low, fig.height = 1.6, fig.cap = "Ladder Score vs Social Suppor Lower than Total Means"}
+ WHR20 %>%
+  filter(`Regional indicator` %in% 
+           c("Middle East and North Africa",
+             "South Asia", 
+             "Sub-Saharan Africa")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+             y = `Social support`)) +
+  geom_point() +
+  geom_vline(aes(xintercept = 5.47324),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept = 0.8087211),
+             linetype = "dashed") +
+  facet_wrap(~`Regional indicator`, ncol = 3)
+```
+
+## Healthy Life Expectancy
+
+Table \@ref(tab:HLE-ord) shows the ranking of Social Healthy Life Expectancy score of regions.
+
+```{r HLE-ord}
+HLE_mean <- WHR20 %>% 
+  group_by(`Regional indicator`) %>% 
+  summarise(Average 
+            = round(mean(`Healthy life expectancy`),2))%>%
+  arrange(-Average)
+
+  HLE_mean %>% 
+    kable(caption = "Healthy life expectancy") %>%
+      kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+```{r HLE-dens, eval = FALSE}
+ggplot(WHR20, aes(x = `Healthy life expectancy`))+
+  geom_density()+
+  geom_vline(aes(xintercept =
+                   mean(`Healthy life expectancy`)),
+             linetype = "dashed")
+
+mean(WHR20$`Healthy life expectancy`)
+
+quantile(WHR20$`Healthy life expectancy`)
+```
+
+In the high Healthy Life Expectancy score countries group, it shows a positive correlation in Southeast Asia, Middle East and North Africa and North America and ANZ. But we found in the Commonwealth of Independent States, Central and Eastern Europe, Western Europe, some countries are almost at the same level of Healthy life Expectancy, their Ladder Scores arrange from a big difference. See that in Figure \@ref(fig:HLE-high).
+
+```{r HLE-high, fig.cap = "Ladder Score vs Healthy Life Expectancy Higher than Total Means"}
+ WHR20 %>%
+  filter(!`Regional indicator` %in% 
+           c("South Asia", 
+             "Sub-Saharan Africa")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+             y = `Healthy life expectancy`)) +
+  geom_point() +
+  geom_vline(aes(xintercept = 5.47324),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept = 64.44553),
+             linetype = "dashed") +
+  facet_wrap(~`Regional indicator`, ncol = 3)
+```
+
+Figure \@ref(fig:HLE-low) shows, in the low Healthy Life Expectancy region, they also have a low Ladder Score, while they don't look have a special relationship between Healthy Life Expectancy and Ladder Score. 
+
+```{r HLE-low, fig.height = 1.6, fig.cap = "Ladder Score vs Healthy Life Expectancy Lower than Total Means"}
+ WHR20 %>%
+  filter(`Regional indicator` %in% 
+           c("South Asia", 
+             "Sub-Saharan Africa")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+             y = `Healthy life expectancy`)) +
+  geom_point() +
+  geom_vline(aes(xintercept = 5.47324),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept = 64.44553),
+             linetype = "dashed") +
+  facet_wrap(~`Regional indicator`, ncol = 3)
+```
+
+
+# Conclusion
+
+This analysis illustrated that the world’s happiest countries are primarily in Western Europe, North America, and Australia & New Zealand, the countries in these regions got the higher Ladder Scores. 
+
+The six factors included in the report: Logged GDP per capita, Social Support, Healthy Life Expectancy, Freedom to make life choices, Generosity, basically show a positive correlation between them and Ladder Scores. Most of the countries in high-factors regions got higher Ladder Scores than most of the countries in low-factors regions. But it is definitely a golden rule that once one country or region got high scores on these six factors, the country or region was the happiest one. We found many countries are in high-factor region countries and their factors are higher than some other countries, while their Ladder Score is lower than those countries. Also, we found in some regions, shows there perhaps is a relationship between the factors and Ladder Score, but in some regions, there is no relationship existing.
+
+By analyzing these reports, we are able to decipher what makes countries and their citizens happier, thus allowing us to focus on prioritizing and improving these aspects of each country. It is through this that we are able to achieve the true pursuit of happiness, which we as human beings strive for.
+
+
+## References
+
+World Happiness Report. 2020. The World Happiness Report 2020. [online] Available at: https://worldhappiness.report/ed/2020/
+
+Hadley Wickham and Jennifer Bryan (2019). readxl: Read Excel Files. R package version 1.3.1. https://CRAN.R-project.org/package=readxl
+
+Wickham et al., (2019). Welcome to the tidyverse. Journal of Open Source Software, 4(43), 1686, https://doi.org/10.21105/joss.01686
+
+Sam Firke (2021). janitor: Simple Tools for Examining and Cleaning Dirty Data. R package version 2.1.0. https://CRAN.R-project.org/package=janitor
+
+C. Sievert. Interactive Web-Based Data Visualization with R, plotly, and shiny. Chapman and Hall/CRC Florida, 2020.
+
+Hao Zhu (2021). kableExtra: Construct Complex Table with 'kable' and Pipe Syntax. R package version 1.3.4. https://CRAN.R-project.org/package=kableExtra
+
+Yihui Xie (2020). bookdown: Authoring Books and Technical Documents with R Markdown. R package version 0.21.
+
+Yihui Xie (2016). bookdown: Authoring Books and Technical Documents with R Markdown. Chapman and Hall/CRC. ISBN 978-1138700109
+
+H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2016.
+
+Hadley Wickham (2019). stringr: Simple, Consistent Wrappers for Common String Operations. R package version 1.4.0. https://CRAN.R-project.org/package=stringr
+
+Arel-Bundock et al., (2018). countrycode: An R package to convert country names and country codes. Journal of Open Source Software, 3(28), 848, https://doi.org/10.21105/joss.00848
