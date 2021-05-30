@@ -512,6 +512,7 @@ The above figure \@ref(fig:corh) is the group of scores greater than 0.80. In Ce
 
 ## Compare Top5, Middle5 and Worst5 Countries
 
++ The below table \@ref(tab:countab) shows the Countries according to their happiness rank. We have divided them into levels, Top5, Middle5 and Worst5 Countries.
 
 ```{r include=FALSE}
 top5 <- happiness %>% head(5) %>% mutate(Level = "TOP5")
@@ -542,6 +543,18 @@ data.table(comparison,
 comparison.score <- comparison %>% rename("Economy GDP" = "logged_gdp_per_capita" , "Social Support" = "social_support" , "Health" = "healthy_life_expectancy", "Freedom" = "freedom_to_make_life_choices", "Corruption" ="perceptions_of_corruption") %>% 
   gather(key = "columns", value = "score", happiness_score:Corruption)
 
+```
+
+```{r countab}
+comparison.score %>% 
+  filter(columns == "happiness_score") %>%
+  select(country_name,regional_indicator,Level,happiness_rank,score) %>% 
+  kable(caption = "Top 5, Middle5 and Worst 5 Countries") %>%
+   kable_styling(c("hover", 
+                  "condensed",
+                  position = "center", 
+                  fixed_thead = TRUE))
+      
 ```
 
 

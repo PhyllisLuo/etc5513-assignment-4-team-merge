@@ -1,0 +1,10 @@
+"0","comparison.score %>% "
+"0","  filter(columns == ""happiness_score"") %>%"
+"0","  select(country_name,regional_indicator,Level,happiness_rank,score) %>% "
+"0","  kable(caption = ""Top 5, Middle5 and Worst 5 Countries"") %>%"
+"0","   kable_styling(c(""hover"", "
+"0","                  ""condensed"","
+"0","                  position = ""center"", "
+"0","                  fixed_thead = TRUE))"
+"2","Error in dirname(to) : path too long
+"

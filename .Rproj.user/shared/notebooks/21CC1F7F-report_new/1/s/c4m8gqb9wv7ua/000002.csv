@@ -1,0 +1,13 @@
+"0",""
+"0","data.table(comparison,"
+"0","          options = list("
+"0","            lengthMenu = c(5, 10, 15)"
+"0","          ),"
+"0","          caption = "
+"0","            htmltools::tags$caption("
+"0","              style = 'caption-side: bottom; text-align: center;', "
+"0","              htmltools::em('Data table that only includes top5, middle5 and worst5 countries'))"
+"0","          ) %>% kable(caption = ""Top5, Middle5 and Worst5 Countries"") %>%"
+"0","      kable_styling(bootstrap_options = c(""striped"", ""hover""))"
+"2","Error in dirname(to) : path too long
+"
