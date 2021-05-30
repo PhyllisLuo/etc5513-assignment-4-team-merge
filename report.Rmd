@@ -1,9 +1,43 @@
 ---
-title: "Untitled"
-author: "T13_Wed_kable"
-date: "5/24/2021"
-output: html_document
-editor_options: 
+title: "Analysis on World Happiness"
+author:
+- familyname: Luo
+  othernames: Yu
+  address: Monash University
+  email: yluo0065@student.monash.com
+  correspondingauthor: yes
+  qualifications: Master
+- familyname: Thakker
+  othernames: Khushee
+  address: Monash University
+  email: ktha0021@student.monash.edu
+  qualifications: Master
+- familyname: Chen
+  othernames: Yunqi
+  address: Monash University
+  email: yche0454@student.monash.edu
+  correspondingauthor: yes
+  qualifications: Master
+organization: the World Happiness Report
+output:
+  html_document:
+    toc: no
+    df_print: paged
+  bookdown::pdf_document2:
+    template: monashreport2.tex
+    fig_caption: yes
+    fig_height: 5
+    fig_width: 8
+    includes:
+      in_header: preamble.tex
+    keep_tex: yes
+    number_sections: yes
+    citation_package: biblatex
+    toc: no
+biblio-style: authoryear-comp
+linestretch: 1.5
+bibliography: references.bib
+editor_options:
   chunk_output_type: console
 ---
 
@@ -86,10 +120,14 @@ plot_ly(happiness, x=~regional_indicator,
 
 *Happiness Score by Region*
 
-We have collected happiness data from World Happiness Report for 2020. It has global happiness that ranks 156 countries by how happy their citizens perceive themselves to be.<br>
-We grouped the countries into different regions in the world to observe which region is the happiest.<br>
-From the box plot \@ref(fig:region) we see that the happiness scores are quite different among these regions. <br>
-The group determined that the **“happiest”** countries were located in **Western Europe**, particularly Finland and Denmark.<br>
+We have collected happiness data from World Happiness Report for 2020. It has global happiness that ranks 156 countries by how happy their citizens perceive themselves to be.
+
+We grouped the countries into different regions in the world to observe which region is the happiest.
+
+From the box plot \@ref(fig:region) we see that the happiness scores are quite different among these regions.
+
+The group determined that the **“happiest”** countries were located in **Western Europe**, particularly Finland and Denmark.
+
 Meanwhile the **“least happiest”** countries were located in **Sub-Saharan Africa** and **South Asia**. 
 
 
