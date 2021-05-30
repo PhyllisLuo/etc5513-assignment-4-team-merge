@@ -1,4 +1,0 @@
-"0","free_avg <- WHR20 %>%"
-"0","  group_by(`Regional indicator`) %>% "
-"0","  summarise(average = mean(`Freedom to make life choices`)) %>% "
-"0","  arrange(desc(average))"

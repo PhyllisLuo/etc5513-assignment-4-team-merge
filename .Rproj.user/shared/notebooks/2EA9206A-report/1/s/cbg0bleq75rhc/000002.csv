@@ -1,6 +1,0 @@
-"0","perc_avg  <- WHR20 %>%"
-"0","  group_by(`Regional indicator`) %>% "
-"0","  summarise(average = mean(`Perceptions of corruption`)) %>% "
-"0","  arrange(desc(average))"
-"0",""
-"0","  kable(perc_avg)"
