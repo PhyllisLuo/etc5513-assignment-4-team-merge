@@ -3,7 +3,11 @@ title: "Analysis on World Happiness"
 subtitle: ETC5513 Assignment 4
 author: Yu Luo, Khushee Thakker, Yunqi Chen
 output:
-  bookdown::html_document2
+  bookdown::html_document2:
+    df_print: paged
+    theme: cerulean
+    toc: yes
+    toc_depth: '3'
 ---
 
 ```{r setup, include=FALSE}
@@ -39,6 +43,7 @@ A column is added for measuring the happiness rank. Happiness rank is given for 
 
 We use the six variables to help us understand the sources of variations in happiness among countries and over time.
 
+\newpage
 
 # Happiness Score by Region
 
@@ -95,6 +100,8 @@ plot_ly(happiness, x=~regional_indicator,
          margin=list(b = 100),
          title="Box Plot of Happiness Score by Region")
 ```
+
+\newpage
 
 # The Six Variables Might Affected Happiness
 
@@ -170,6 +177,8 @@ Below Figure \@ref(fig:GDP-low) shows the regions whose regional GDP scores are 
   facet_wrap(~`Regional indicator`, ncol = 3)
 ```
 
+\newpage
+
 ## Social Support
 
 *This subsection is created by Yu Luo.*
@@ -238,6 +247,8 @@ But not all the high score Social Support countries also got high Ladder Scores.
   facet_wrap(~`Regional indicator`, ncol = 3)
 ```
 
+\newpage
+
 ## Healthy Life Expectancy
 
 *This subsection is created by Yu Luo.*
@@ -302,6 +313,7 @@ Figure \@ref(fig:HLE-low) shows, in the low Healthy Life Expectancy region, they
   facet_wrap(~`Regional indicator`, ncol = 3)
 ```
 
+\newpage
 
 ## Freedom to make life choices
 
@@ -375,6 +387,7 @@ From the above figure \@ref(fig:freel), in the group of scores less than 0.75, a
 
 **In general, the ladder score is related to the "Freedom to make life choices" score in most of the regions, except Southeast Asia, and Middle East and North Africa.**
 
+\newpage
 
 ## Generosity
 
@@ -431,6 +444,8 @@ From the above figure \@ref(fig:geneh), in the group of the generosity score hig
 The above figure \@ref(fig:genel) indicates that in the group of the generosity score less than 0, except of Latin America and Caribbean, the ladder score distributed scattered around the average ladder score line.
 
 **In general, the generosity score does not show a relationship with the ladder score.**
+
+\newpage
 
 ## Perceptions of corruption
 
@@ -502,6 +517,7 @@ The above figure \@ref(fig:corh) is the group of scores greater than 0.80. In Ce
 
 **In conclusion, as for the "perceptions of corruption" score, the lowest and the highest four regions all have a high ladder score. Most of the regions in the middle score groups show the middle ladder score.**
 
+\newpage
 
 # Happiness score in differetent countries
 
@@ -509,6 +525,8 @@ The above figure \@ref(fig:corh) is the group of scores greater than 0.80. In Ce
 
 * In the above sections we have seen factors that are reflect happiness score in different regions.
 * In the this section we will look happiness score with respect to countries countries.
+
+\newpage
 
 ## Compare Top5, Middle5 and Worst5 Countries
 
@@ -571,7 +589,7 @@ comparison.score %>%
 + Health is particular important because it directly affects individuals in countries.
 * We observe that the countries with highest happiness score have a better GDP, less corruption, more freedom to make choices, good health ratio, more generosity and receive social support.
  
-
+\newpage
 
 ## Happiness Score for Countries
 
@@ -600,6 +618,7 @@ fig
 
 + Countries such as Afghanistan and South Sudan have least happiness score, one one the possible reasons could be the wars happening there.
 
+\newpage
 
 # Conclusion
 
@@ -610,7 +629,7 @@ The six factors included in the report: Logged GDP per capita, Social Support, H
 By analyzing these reports, we are able to decipher what makes countries and their citizens happier, thus allowing us to focus on prioritizing and improving these aspects of each country. It is through this that we are able to achieve the true pursuit of happiness, which we as human beings strive for.
 
 
-\clearpage
+\newpage
 
 # References
 
