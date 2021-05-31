@@ -1,9 +1,0 @@
-"0","knitr::kable(free_avg, caption = ""Average Freedom to Make Life Choices Score by Region"","
-"0","      col.names = c(""Region"", ""Average Score"")) %>% "
-"0","  kable_styling(c(""hover"", "
-"0","                  ""condensed"","
-"0","                  position = ""center"", "
-"0","                  fixed_thead = TRUE))"
-"2","Error in tempfile(""_rs_html_deps_"", tmpdir = ctx$outputFolder, fileext = "".json"") : 
-  temporary name too long
-"

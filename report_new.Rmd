@@ -35,6 +35,7 @@ library(countrycode)
 WHR20 <- read_excel("Data/WHR20_DataForFigure2.1.xls")
 ```
 
+\newpage
 # Introduction
 
 Countries are ranked each year based on a **Happiness Index**. This index rates the happiness of countries on a scale from 0 to 10. The happiness index is also called the ladder score or the happiness score. 
@@ -526,7 +527,6 @@ The above figure \@ref(fig:corh) is the group of scores greater than 0.80. In Ce
 * In the above sections we have seen factors that are reflect happiness score in different regions.
 * In the this section we will look happiness score with respect to countries countries.
 
-\newpage
 
 ## Compare Top5, Middle5 and Worst5 Countries
 

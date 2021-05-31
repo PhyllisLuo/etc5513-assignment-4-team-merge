@@ -1,4 +1,0 @@
-"0","gene_avg  <- WHR20 %>%"
-"0","  group_by(`Regional indicator`) %>% "
-"0","  summarise(average = mean(`Generosity`)) %>% "
-"0","  arrange(desc(average))"
