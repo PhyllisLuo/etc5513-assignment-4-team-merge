@@ -1,9 +1,13 @@
 ---
 title: "Analysis on World Happiness"
 subtitle: ETC5513 Assignment 4
-author: Yu Luo, Thakker Khushee, Yunqi Chen
+author: Yu Luo, Khushee Thakker, Yunqi Chen
 output:
-  bookdown::html_document2
+  bookdown::html_document2:
+    df_print: paged
+    theme: cerulean
+    toc: yes
+    toc_depth: '3'
 ---
 
 ```{r setup, include=FALSE}
@@ -31,8 +35,80 @@ library(countrycode)
 WHR20 <- read_excel("Data/WHR20_DataForFigure2.1.xls")
 ```
 
+\newpage
+# Introduction
+
+Countries are ranked each year based on a **Happiness Index**. This index rates the happiness of countries on a scale from 0 to 10. The happiness index is also called the ladder score or the happiness score. 
+
+A column is added for measuring the happiness rank. Happiness rank is given for the ladder score. The greater the ladder score, the higher the rank.
+
+We use the six variables to help us understand the sources of variations in happiness among countries and over time.
+
+\newpage
+
+# Happiness Score by Region
+
+*This section is created by Khushee Thakker.*
+
+* We have collected happiness data from World Happiness Report for 2020. It has global happiness that ranks 156 countries by how happy their citizens perceive themselves to be.
+
+* We grouped the countries into different regions in the world to observe which region is the happiest.
+
+* From the box plot \@ref(fig:region) we see that the happiness scores are quite different among these regions.
+
+* The group determined that the **“happiest”** countries were located in **Western Europe**, particularly Finland and Denmark.
+
+* Meanwhile the **“least happiest”** countries were located in **Sub-Saharan Africa** and **South Asia**. 
+
+
+```{r include=FALSE}
+happiness <- WHR20 %>% 
+  select(`Country name`,`Regional indicator`,`Ladder score`,`Logged GDP per capita`,`Social support`,`Healthy life expectancy`,`Freedom to make life choices`,Generosity,`Perceptions of corruption`) %>% 
+  mutate(`Happiness Rank` = rank(-`Ladder score`)) %>% 
+  rename(`Happiness Score` = `Ladder score`) %>% clean_names()
+
+
+```
+
+```{r regiontable, include=FALSE}
+reg_avg <- happiness %>%
+  select(regional_indicator,happiness_score) %>%
+  group_by(regional_indicator) %>%
+  summarize(Average = mean(happiness_score)) %>% 
+  arrange(-Average)
+
+```
+
+```{r countrycode, include=FALSE}
+happiness$iso3 <- countrycode(happiness$country_name, 'country.name', 'iso3c')
+
+happiness[happiness$country_name=="Kosovo","iso3"] <- "XKX"
+
+```
+
+```{r region, fig.cap = "Happiness Score by Region", fig.align='center',fig.height=5,fig.width=8}
+plot_ly(happiness, x=~regional_indicator,
+              y=~happiness_score,
+              type="box",
+              boxpoints="all",
+              color=~regional_indicator,
+        text = ~paste("<b>Region:</b> ", regional_indicator,
+                      "<br><b>Country:</b> ", country_name,
+                      "<br><b>Happiness Score:</b>", happiness_score))%>%
+  layout(xaxis=list(showticklabels = FALSE),
+         yaxis=list(title="Happiness Score"),
+         legend=list(font = (size = 5)),
+         margin=list(b = 100),
+         title="Box Plot of Happiness Score by Region")
+```
+
+\newpage
+
+# The Six Variables Might Affected Happiness
 
 ## GDP
+
+*This subsection is created by Yu Luo.*
 
 Table \@ref(tab:GDP-ord) shows the average Logged GDP per capita of Regions from high to low. The top 3 regions with the highest GDP are North America and ANZ, Western Europe and East Asia, their GDP is all higher than 10. 
 
@@ -102,7 +178,11 @@ Below Figure \@ref(fig:GDP-low) shows the regions whose regional GDP scores are 
   facet_wrap(~`Regional indicator`, ncol = 3)
 ```
 
+\newpage
+
 ## Social Support
+
+*This subsection is created by Yu Luo.*
 
 The average Social Support of regions from high to low is shown in Table \@ref(tab:SS-ord).
 
@@ -168,7 +248,11 @@ But not all the high score Social Support countries also got high Ladder Scores.
   facet_wrap(~`Regional indicator`, ncol = 3)
 ```
 
+\newpage
+
 ## Healthy Life Expectancy
+
+*This subsection is created by Yu Luo.*
 
 Table \@ref(tab:HLE-ord) shows the ranking of Social Healthy Life Expectancy score of regions.
 
@@ -230,6 +314,311 @@ Figure \@ref(fig:HLE-low) shows, in the low Healthy Life Expectancy region, they
   facet_wrap(~`Regional indicator`, ncol = 3)
 ```
 
+\newpage
+
+## Freedom to make life choices
+
+*This subsection is created by Yunqi Chen.*
+
+**Freedom to make life choices** is the national average of binary responses to the GWP question, “Are you satisfied or dissatisfied with your freedom to choose what you do with your life?”.
+
+```{r, include=FALSE}
+free_avg <- WHR20 %>%
+  group_by(`Regional indicator`) %>% 
+  summarise(average = mean(`Freedom to make life choices`)) %>% 
+  arrange(desc(average))
+```
+
+
+```{r tabfree}
+knitr::kable(free_avg, caption = "The Average Freedom to Make Life Choices Score by Region",
+      col.names = c("Region", "Average Score")) %>% 
+  kable_styling(c("hover", 
+                  "condensed",
+                  position = "center", 
+                  fixed_thead = TRUE))
+```
+
+The above table \@ref(tab:tabfree) is the average "freedom to make life choices" score among all the regions. It is divided into three groups by the average score greater than 0.80, 0.75-0.80, and lower than 0.75.
+
+```{r freeh, fig.cap="The Group of High Freedom to Make Life Choices Score", fig.width=10}
+ WHR20 %>%
+  filter(`Regional indicator` %in% c("Southeast Asia",  "North America and ANZ", "Western Europe", "Latin America and Caribbean")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+             y = `Freedom to make life choices`)) +
+  geom_point() +
+  facet_grid(~`Regional indicator`)+
+  geom_vline(aes(xintercept = mean(WHR20$`Ladder score`)),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept = mean(WHR20$`Freedom to make life choices`)),
+             linetype = "dashed") 
+```
+
+As the figure \@ref(fig:freeh) above, in the group of scores higher than 8.0, except Southeast Asia, the ladder scores in the other three regions are higher than the average.
+
+```{r freem, fig.cap="The Group of Middle Freedom to Make Life Choices Score", fig.width=10}
+WHR20 %>%
+  filter(`Regional indicator` %in% c("Commonwealth of Independent States", "South Asia", "Central and Eastern Europe", "East Asia")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+               y = `Freedom to make life choices`)) +
+  geom_point() +
+  facet_grid(~`Regional indicator`) +
+  geom_vline(aes(xintercept = mean(WHR20$`Ladder score`)),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept = mean(WHR20$`Freedom to make life choices`)),
+             linetype = "dashed") 
+```
+
+The above figure \@ref(fig:freem) is the group of scores of 0.75-0.80. The distribution of the points is generally surrounding the average line. However, in South Asia, most of the points are lower than the average.
+
+```{r freel, fig.cap="The Group of Low Freedom to Make Life Choices Score"}
+ WHR20 %>%
+  filter(`Regional indicator` %in% c("Sub-Saharan Africa", "Middle East and North Africa")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+               y = `Freedom to make life choices`)) +
+  geom_point() +
+  facet_grid(~`Regional indicator`) +
+  geom_vline(aes(xintercept = mean(WHR20$`Ladder score`)),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept = mean(WHR20$`Freedom to make life choices`)),
+             linetype = "dashed") 
+```
+
+From the above figure \@ref(fig:freel), in the group of scores less than 0.75, a tremendous amount of the points of Sub-Saharan Africa are on the left of the average line. However, the points are scattered evenly from high to low in the Middle East and North Africa. 
+
+**In general, the ladder score is related to the "Freedom to make life choices" score in most of the regions, except Southeast Asia, and Middle East and North Africa.**
+
+\newpage
+
+## Generosity
+
+*This subsection is created by Yunqi Chen.*
+
+Generosity is the residual of regressing the national average of GWP responses to the question, “Have you donated money to a charity in the past month?” on GDP per capita.
+
+The table below \@ref(tab:tabgene) is the average generosity score among all the regions. It is divided into two groups by the average score over and below 0.
+
+```{r tabgene}
+gene_avg  <- WHR20 %>%
+  group_by(`Regional indicator`) %>% 
+  summarise(average = mean(`Generosity`)) %>% 
+  arrange(desc(average))
+
+  knitr::kable(gene_avg, caption = "The Average Generosity Score by Region",
+                col.names = c("Region", "Average Score")) %>% 
+  kable_styling(c("hover", 
+                  "condensed",
+                  position = "center", 
+                  fixed_thead = TRUE))
+```
+
+
+```{r geneh, fig.cap="The Group of the Generosity Score Higher Than 0", fig.width=10}
+ WHR20 %>%
+  filter(`Regional indicator` %in% c("North America and ANZ","Southeast Asia","Western Europe","South Asia","Sub-Saharan Africa")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+             y = `Generosity`)) +
+  geom_point() +
+  facet_grid(~`Regional indicator`) +
+  geom_vline(aes(xintercept = mean(WHR20$`Ladder score`)),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept = mean(WHR20$`Generosity`)),
+             linetype = "dashed") 
+```
+
+From the above figure \@ref(fig:geneh), in the group of the generosity score higher than 0, the ladder score in North America and ANZ, and Western Europe is higher than the average. On the contrary, in South Asia and Sub-Saharan Africa, the points overwhelmingly position left than the average line. The points for Southeast Asia is around the average line.
+
+
+```{r genel, fig.cap="The Group of the Generosity Score Less Than 0", fig.width=13}
+ WHR20 %>%
+  filter(`Regional indicator` %in% c("Commonwealth of Independent States","East Asia","Latin America and Caribbean","Middle East and North Africa","Central and Eastern Europe")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+               y = `Generosity`)) +
+  geom_point() +
+  facet_grid(~`Regional indicator`) +
+  geom_vline(aes(xintercept = mean(WHR20$`Ladder score`)),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept = mean(WHR20$`Generosity`)),
+             linetype = "dashed") 
+```
+
+The above figure \@ref(fig:genel) indicates that in the group of the generosity score less than 0, except of Latin America and Caribbean, the ladder score distributed scattered around the average ladder score line.
+
+**In general, the generosity score does not show a relationship with the ladder score.**
+
+\newpage
+
+## Perceptions of corruption
+
+*This subsection is created by Yunqi Chen.*
+
+Perceptions of corruption are the average of binary answers to two GWP questions: “Is corruption widespread throughout the government or not?” and “Is corruption widespread within businesses or not?” Where data for government corruption are missing, the perception of business corruption is used as the overall corruption-perception measure . 
+
+The table below \@ref(tab:tabcor) is the average "perceptions of corruption" score among all the regions. It is divided into three groups by the average score greater than 0.75, 0.70-0.75, lower than 0.70. 
+
+```{r tabcor}
+perc_avg  <- WHR20 %>%
+  group_by(`Regional indicator`) %>% 
+  summarise(average = mean(`Perceptions of corruption`)) %>% 
+  arrange(desc(average))
+
+knitr::kable(perc_avg, caption = "The Perceptions of Corruption Score by Region",
+                col.names = c("Region", "Average Score")) %>% 
+  kable_styling(c("hover", 
+                  "condensed",
+                  position = "center", 
+                  fixed_thead = TRUE))
+```
+
+
+```{r corl, fig.cap="The Group of Low Perceptions of Corruption Score"}
+ WHR20 %>%
+  filter(`Regional indicator` %in% c("Western Europe","North America and ANZ")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+               y = `Perceptions of corruption`)) +
+  geom_point() +
+  facet_grid(~`Regional indicator`) +
+  geom_vline(aes(xintercept = mean(WHR20$`Ladder score`)),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept = mean(WHR20$`Perceptions of corruption`)),
+             linetype = "dashed") 
+```
+
+From the figure \@ref(fig:corl), in the group of scores less than 0.70, not surprisingly, all the points are on the right of the average ladder score line. 
+
+```{r corm, fig.cap="The Group of Middle Perceptions of Corruption Score", fig.width=15}
+ WHR20 %>%
+  filter(`Regional indicator` %in% c("South Asia","Sub-Saharan Africa","Middle East and North Africa", "Commonwealth of Independent States","Southeast Asia","East Asia")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+               y = `Perceptions of corruption`)) +
+  geom_point() +
+  facet_grid(~`Regional indicator`) +
+  geom_vline(aes(xintercept = mean(WHR20$`Ladder score`)),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept = mean(WHR20$`Perceptions of corruption`)),
+             linetype = "dashed") 
+```
+
+From the figure \@ref(fig:corm), in the group of scores with between 0.70 and 0.80, except South Asia and Sub-Saharan Africa shows lower ladder score, the other regions all indicate a middle ladder score.
+
+```{r corh, fig.cap="The Group of High Perceptions of Corruption Score"}
+ WHR20 %>%
+  filter(`Regional indicator` %in% c("Central and Eastern Europe","Latin America and Caribbean")) %>% 
+  ggplot(aes(x = `Ladder score`, 
+               y = `Perceptions of corruption`)) +
+  geom_point() +
+  facet_grid(~`Regional indicator`) +
+  geom_vline(aes(xintercept = mean(WHR20$`Ladder score`)),
+             linetype = "dashed") +
+  geom_hline(aes(yintercept = mean(WHR20$`Perceptions of corruption`)),
+             linetype = "dashed") 
+```
+
+The above figure \@ref(fig:corh) is the group of scores greater than 0.80. In Central and Eastern Europe, and Latin America and Caribbean, most of the points are on the right of the average line.
+
+**In conclusion, as for the "perceptions of corruption" score, the lowest and the highest four regions all have a high ladder score. Most of the regions in the middle score groups show the middle ladder score.**
+
+\newpage
+
+# Happiness score in differetent countries
+
+*This section is created by Khushee Thakker.*
+
+* In the above sections we have seen factors that are reflect happiness score in different regions.
+* In the this section we will look happiness score with respect to countries countries.
+
+
+## Compare Top5, Middle5 and Worst5 Countries
+
++ The below table \@ref(tab:countab) shows the Countries according to their happiness rank. We have divided them into levels, Top5, Middle5 and Worst5 Countries.
+
+```{r include=FALSE}
+top5 <- happiness %>% head(5) %>% mutate(Level = "TOP5")
+middle5 <- happiness[76:80, ] %>% mutate(Level = "MIDDLE5")
+worst5 <- happiness %>% tail(5) %>% mutate(Level = "WORST5")
+
+comparison <- bind_rows(top5, middle5, worst5)
+
+comparison$Level <- as.factor(comparison$Level)
+comparison <- transform(comparison, Level = factor(Level, levels = c("TOP5", "MIDDLE5", "WORST5" )))
+```
+
+```{r include=FALSE}
+
+data.table(comparison,
+          options = list(
+            lengthMenu = c(5, 10, 15)
+          ),
+          caption = 
+            htmltools::tags$caption(
+              style = 'caption-side: bottom; text-align: center;', 
+              htmltools::em('Data table that only includes top5, middle5 and worst5 countries'))
+          )
+
+```
+
+```{r include=FALSE}
+comparison.score <- comparison %>% rename("Economy GDP" = "logged_gdp_per_capita" , "Social Support" = "social_support" , "Health" = "healthy_life_expectancy", "Freedom" = "freedom_to_make_life_choices", "Corruption" ="perceptions_of_corruption") %>% 
+  gather(key = "columns", value = "score", happiness_score:Corruption)
+
+```
+
+```{r countab}
+comparison.score %>% 
+  filter(columns == "happiness_score") %>%
+  select(country_name,regional_indicator,Level,happiness_rank,score) %>% 
+  kable(caption = "Top 5, Middle5 and Worst 5 Countries") %>%
+   kable_styling(c("hover", 
+                  "condensed",
+                  position = "center", 
+                  fixed_thead = TRUE))
+      
+```
+
+
+```{r compcount, fig.cap = "Compare top median and bottom five countries", fig.width=10}
+
+comparison.score %>% 
+  ggplot(aes(x = Level, y = score, colour = Level, fill = Level)) + 
+  geom_boxplot(position=position_dodge(width=1)) + facet_wrap(~columns, scales = "free") 
+
+```
+
++ In the above figure \@ref(fig:compcount), we have taken the top 5, middle 5 and the bottom 5 countries to understand the relations between 6 factors and happiness score. 
++ Country with higher happiness score have higher GDP. Happiest countries tend to be those with strong and stable economies.
++ Health is particular important because it directly affects individuals in countries.
+* We observe that the countries with highest happiness score have a better GDP, less corruption, more freedom to make choices, good health ratio, more generosity and receive social support.
+ 
+\newpage
+
+## Happiness Score for Countries
+
+
+```{r map, fig.cap= "World Happiness Map", fig.width=8}
+
+fig <- plot_ly(happiness, type='choropleth', locations= happiness$iso3 , z= happiness$happiness_score, text= ~paste(
+                      "<br><b>Country:</b> ", country_name,
+                      "<br><b>Happiness rank:</b>", happiness_rank), colorscale="Viridis")
+
+fig <- fig %>% colorbar(title = "Happiness Score" )
+
+fig <- fig %>% layout(
+    title = 'World Happiness Map, Year 2020')
+fig
+
+```
+
+
+
++ The World Happiness report calculates how much of the Happiness Index can be explained by the key factors. Add them all up and you should get close to the actual number. <br>
+
++ From the above map \@ref(fig:map) you can easily spot the happiest country, Finland. <br>
+
++ Finland is ranked 1st according to the happiness score it has. It is said one of the reason why Finnish people are so happy is that they do not have to deal with corruption and black money. <br>
+
++ Countries such as Afghanistan and South Sudan have least happiness score, one one the possible reasons could be the wars happening there.
+
+\newpage
 
 # Conclusion
 
@@ -240,26 +629,33 @@ The six factors included in the report: Logged GDP per capita, Social Support, H
 By analyzing these reports, we are able to decipher what makes countries and their citizens happier, thus allowing us to focus on prioritizing and improving these aspects of each country. It is through this that we are able to achieve the true pursuit of happiness, which we as human beings strive for.
 
 
-## References
+\newpage
 
-World Happiness Report. 2020. The World Happiness Report 2020. [online] Available at: https://worldhappiness.report/ed/2020/
+# References
 
-Hadley Wickham and Jennifer Bryan (2019). readxl: Read Excel Files. R package version 1.3.1. https://CRAN.R-project.org/package=readxl
+- Arel-Bundock et al., (2018). countrycode: An R package to convert country names and country codes. Journal of Open Source Software, 3(28), 848, https://doi.org/10.21105/joss.00848
 
-Wickham et al., (2019). Welcome to the tidyverse. Journal of Open Source Software, 4(43), 1686, https://doi.org/10.21105/joss.01686
+- C. Sievert. Interactive Web-Based Data Visualization with R, plotly, and shiny. Chapman and Hall/CRC Florida, 2020.
 
-Sam Firke (2021). janitor: Simple Tools for Examining and Cleaning Dirty Data. R package version 2.1.0. https://CRAN.R-project.org/package=janitor
+- Hadley Wickham and Jennifer Bryan (2019). readxl: Read Excel Files. R package version 1.3.1. https://CRAN.R-project.org/package=readxl
 
-C. Sievert. Interactive Web-Based Data Visualization with R, plotly, and shiny. Chapman and Hall/CRC Florida, 2020.
+- Hadley Wickham (2019). stringr: Simple, Consistent Wrappers for Common String Operations. R package version 1.4.0. https://CRAN.R-project.org/package=stringr
 
-Hao Zhu (2021). kableExtra: Construct Complex Table with 'kable' and Pipe Syntax. R package version 1.3.4. https://CRAN.R-project.org/package=kableExtra
+- Hao Zhu (2021). kableExtra: Construct Complex Table with 'kable' and Pipe Syntax. R package version 1.3.4. https://CRAN.R-project.org/package=kableExtra
 
-Yihui Xie (2020). bookdown: Authoring Books and Technical Documents with R Markdown. R package version 0.21.
+- H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2016.
 
-Yihui Xie (2016). bookdown: Authoring Books and Technical Documents with R Markdown. Chapman and Hall/CRC. ISBN 978-1138700109
+- Sam Firke (2021). janitor: Simple Tools for Examining and Cleaning Dirty Data. R package version 2.1.0. https://CRAN.R-project.org/package=janitor
 
-H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2016.
+- Wickham et al., (2019). Welcome to the tidyverse. Journal of Open Source Software, 4(43), 1686, https://doi.org/10.21105/joss.01686
 
-Hadley Wickham (2019). stringr: Simple, Consistent Wrappers for Common String Operations. R package version 1.4.0. https://CRAN.R-project.org/package=stringr
+- World Happiness Report. 2020. The World Happiness Report 2020. [online] Available at: https://worldhappiness.report/ed/2020/
 
-Arel-Bundock et al., (2018). countrycode: An R package to convert country names and country codes. Journal of Open Source Software, 3(28), 848, https://doi.org/10.21105/joss.00848
+- Yihui Xie (2020). bookdown: Authoring Books and Technical Documents with R Markdown. R package version 0.21.
+
+- Yihui Xie (2016). bookdown: Authoring Books and Technical Documents with R Markdown. Chapman and Hall/CRC. ISBN 978-1138700109
+
+
+
+
+
